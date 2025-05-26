@@ -1,8 +1,0 @@
-Timer started
-
-New task: Initialization
-Initialization: Checkpoint Array time: 0.17987s
-Initialization: Checkpoint HashSet time: 0.00003s
-
-New task: Fill
-Fill: Checkpoint Array time: 5.66225s
