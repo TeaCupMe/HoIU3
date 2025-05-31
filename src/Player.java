@@ -24,8 +24,8 @@ public class Player {
 
             armies = new ArrayList<>(armiesJSON.size());
 
-            for (int i = 0; i < armiesJSON.size(); i++) {
-                JSONObject armyJSON = (JSONObject) armiesJSON.get(i);
+            for (Object o : armiesJSON) {
+                JSONObject armyJSON = (JSONObject) o;
                 armies.add(new Army(armyJSON));
             }
 
