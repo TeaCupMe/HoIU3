@@ -8,6 +8,7 @@ public class SessionData {
     public GameField field;
 
 
+
     SessionData(JSONObject jsonObject) {
         try {
             this.totalPlayers = (Long) (jsonObject.getOrDefault("totalPlayers", 0));

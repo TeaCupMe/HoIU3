@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f185e07b-06eb-4217-8a3e-207f309254a9" name="Changes" comment="Integrated Logger and Formatter functionality." />
+    <list default="true" id="f185e07b-06eb-4217-8a3e-207f309254a9" name="Changes" comment="Cleanup">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/SessionData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SessionData.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -43,6 +47,18 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="UPDATE_TYPE" value="REBASE" />
   </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "TeaCupMe"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/TeaCupMe/HoIU3",
+    "accountId": "4a7fb2a3-9167-40aa-a1c4-d7c2b17eed1a"
+  }
+}]]></component>
   <component name="KubernetesApiPersistence">{}</component>
   <component name="KubernetesApiProvider">{
   &quot;isMigrated&quot;: true
@@ -141,7 +157,8 @@
       <updated>1739994393554</updated>
       <workItem from="1746970362341" duration="17959000" />
       <workItem from="1747434549943" duration="8317000" />
-      <workItem from="1748194880826" duration="13035000" />
+      <workItem from="1748194880826" duration="17242000" />
+      <workItem from="1748682567538" duration="340000" />
     </task>
     <task id="LOCAL-00001" summary="Integrated Logger and Formatter functionality.">
       <option name="closed" value="true" />
@@ -151,7 +168,15 @@
       <option name="project" value="LOCAL" />
       <updated>1748219124934</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Cleanup">
+      <option name="closed" value="true" />
+      <created>1748219511195</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1748219511195</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -170,7 +195,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Integrated Logger and Formatter functionality." />
-    <option name="LAST_COMMIT_MESSAGE" value="Integrated Logger and Formatter functionality." />
+    <MESSAGE value="Cleanup" />
+    <option name="LAST_COMMIT_MESSAGE" value="Cleanup" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
