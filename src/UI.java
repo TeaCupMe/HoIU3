@@ -23,7 +23,7 @@ public class UI {
                 1, "\uD83D\uDEA7",
                 2, "\uD83D\uDFE5",
                 3, "\uD83D\uDFE7",
-                8, "⬛\uFE0F",
+                8, "⬛",
                 9, "\uD83D\uDFE8",
                 10, "\uD83D\uDFEA",
                 11, "",
@@ -68,16 +68,16 @@ public class UI {
         }
 
         // output everything
-        String outputField = new String();
+        StringBuilder outputField = new StringBuilder();
 
-        for (int row = 0; row < fieldBuffer.length; row++){
-           for (int col = 0; col < fieldBuffer[row].length; col++){
-               outputField += fieldBuffer[row][col].toString();
-           }
-           outputField += "\n";
+        for (MapTile[] mapTiles : fieldBuffer) {
+            for (MapTile mapTile : mapTiles) {
+                outputField.append(mapTile.toString());
+            }
+            outputField.append("\n");
         }
 
-        UI.printToStream(outputField, fieldStream);
+        UI.printToStream(outputField.toString(), fieldStream);
 
 
 
@@ -91,7 +91,7 @@ public class UI {
     public int getIntInput(String query, int min, int max) {
         int retries = inputRetries;
         outputStream.println(query);
-        int input = Integer.MIN_VALUE;
+        int input;
         input = scanner.nextInt();
         while ((input < min || input > max) && retries-- != 0) {
             outputStream.println("Invalid input! Try again.\n");
@@ -103,7 +103,7 @@ public class UI {
 
     public int getIntInput(String query, @NotNull Collection<Integer> validInputs) {
         outputStream.println(query);
-        int input = Integer.MIN_VALUE;
+        int input;
         input = scanner.nextInt();
         while ((!validInputs.contains(input)) && inputRetries-- != 0) {
             outputStream.println("Invalid input! Try again.\n");
