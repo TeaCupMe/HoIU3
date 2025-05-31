@@ -4,6 +4,8 @@ import java.text.SimpleDateFormat;
 import CrFormatter.Formatter;
 import CrFormatter.FormatterOptions;
 
+import static java.lang.Math.min;
+
 public class Logger {
       FormatterOptions formatError = new FormatterOptions("B", "R");
       FormatterOptions formatWarning = new FormatterOptions("", "Y");
@@ -26,7 +28,16 @@ public class Logger {
         log(message, formatInfo);
     }
       void log(String message, FormatterOptions options) {
-        debugOutput.println(Formatter.format("["+getTime()+"] - "+message, options));
+          if (Game.LogStackTrace) {
+              StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
+              debugOutput.print("Log from");
+              for (int i = min(5, stackTraceElements.length); i >= 2; i--) {
+                  StackTraceElement stackTraceElement = stackTraceElements[i];
+                  debugOutput.print(":" + stackTraceElement.getClassName() + "." + stackTraceElement.getMethodName() + "()");
+              }
+              debugOutput.print(" ");
+          }
+          debugOutput.println(Formatter.format("["+getTime()+"] - "+message, options));
     }
 
     private static final Logger instance = new Logger();
