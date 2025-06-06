@@ -31,7 +31,14 @@ public class UI {
             );
 
     Map<GameObjectType, String> gameObjectLookUpTable = Map.of(
-            GameObjectType.GAME_OBJECT_TYPE_HERO, "\uD83D\uDFE3"
+            GameObjectType.GAME_OBJECT_TYPE_HERO, "\uD83E\uDDD9", // 🧙
+            GameObjectType.GAME_OBJECT_TYPE_ARMY, "\uD83D\uDE00", // 𓀀
+            GameObjectType.GAME_OBJECT_TYPE_CASTLE, "\uD83C\uDFF0", // 🏰
+            GameObjectType.GAME_OBJECT_TYPE_ENEMY, "\uD83D\uDC00", // 🐀
+            GameObjectType.GAME_OBJECT_TYPE_TREASURE, "\uD83D\uDCB0", // 💰
+            GameObjectType.GAME_OBJECT_TYPE_TREASURE_SMALL, "\uD83D\uDC8E", // 💎
+            GameObjectType.GAME_OBJECT_TYPE_TREASURE_SPECIAL, "\uD83C\uDF7A", // 🍺
+            GameObjectType.GAME_OBJECT_TYPE_MATVEI, "\uD83E\uDD21" // 🤡
 
         );
 
@@ -51,7 +58,7 @@ public class UI {
 
 
     public void drawField(@NotNull GameField gameField) {
-        assert gameField.gameObjects != null;
+        assert Game.gameObjects != null;
 
         MapTile[][] fieldBuffer = new MapTile[Math.toIntExact(gameField.height)][Math.toIntExact(gameField.width)];
 
@@ -63,7 +70,7 @@ public class UI {
         }
 
         // overlap game objects over ground-layer
-        for (GameObject obj: gameField.gameObjects) {
+        for (GameObject obj: Game.gameObjects) {
             fieldBuffer[obj.y][obj.x] = new MapTile(gameObjectLookUpTable.get(obj.type));
         }
 

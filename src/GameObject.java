@@ -6,6 +6,10 @@ public class GameObject {
         this.y = y;
         this.type = type;
     }
+
+    GameObject() {
+        
+    }
 }
 
 

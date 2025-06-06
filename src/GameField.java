@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class GameField {
     String field;
     Long width, height;
-    public ArrayList<GameObject> gameObjects = new ArrayList<>();
+
 
     GameField(String field, Long width, Long height) {
         this.field = field;
