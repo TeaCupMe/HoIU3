@@ -47,7 +47,7 @@ public class Logger {
         if (Logger.LogStackTrace) {
             StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
             instance.logBare("Log from", formatWeak);
-            for (int i = min(5, stackTraceElements.length); i >= min(2, stackTraceElements.length); i--) {
+            for (int i = min(5, stackTraceElements.length-1); i >= min(2, stackTraceElements.length-1); i--) {
                 StackTraceElement stackTraceElement = stackTraceElements[i];
                 instance.logBare(":" + stackTraceElement.getClassName() + "." + stackTraceElement.getMethodName() + "()", formatWeak);
             }
