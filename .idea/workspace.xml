@@ -4,19 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f185e07b-06eb-4217-8a3e-207f309254a9" name="Changes" comment="updated .gitignore">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/json_20250107.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/JTextAreaOutputStream.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/JTextFieldOutputStream.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/UIWindow.java" afterDir="false" />
+    <list default="true" id="f185e07b-06eb-4217-8a3e-207f309254a9" name="Changes" comment="UI logic refactored to work with external renderer such as UIWindow.">
+      <change afterPath="$PROJECT_DIR$/src/JTextPaneOutputStream.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/utils/GFG.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/utils/IHeartNickel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/json_20250107.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/json_20250107.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SessionData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SessionData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/JTextAreaOutputStream.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/JTextAreaOutputStream.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/UI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UITest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UITest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/UIWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UIWindow.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -111,14 +107,14 @@
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit4": "",
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
     "create.test.in.the.same.root": "true",
-    "git-widget-placeholder": "feature/MultiWindow",
+    "git-widget-placeholder": "feature/ColoredEmojiInSwing",
     "last_opened_file_path": "C:/Users/alesh/OneDrive/projects/MGTU/TP/HoIU3/libs/json-20250107.jar",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
+    "project.structure.last.edited": "Libraries",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
     "settings.editor.selected.configurable": "reference.settingsdialog.IDE.editor.colors.Console Font",
@@ -282,7 +278,23 @@
       <option name="project" value="LOCAL" />
       <updated>1749314099732</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="UI logic reafactored to work with external renderer such as UIWindow.">
+      <option name="closed" value="true" />
+      <created>1749323081468</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1749323081468</updated>
+    </task>
+    <task id="LOCAL-00009" summary="UI logic refactored to work with external renderer such as UIWindow.">
+      <option name="closed" value="true" />
+      <created>1749323160983</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1749323160983</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -307,7 +319,9 @@
     <MESSAGE value="Logging cleanup" />
     <MESSAGE value="Treasure type resolution and display" />
     <MESSAGE value="updated .gitignore" />
-    <option name="LAST_COMMIT_MESSAGE" value="updated .gitignore" />
+    <MESSAGE value="UI logic reafactored to work with external renderer such as UIWindow." />
+    <MESSAGE value="UI logic refactored to work with external renderer such as UIWindow." />
+    <option name="LAST_COMMIT_MESSAGE" value="UI logic refactored to work with external renderer such as UIWindow." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

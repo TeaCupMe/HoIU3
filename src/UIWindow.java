@@ -1,10 +1,13 @@
+import raven.emoji.AutoWrapText;
+import raven.emoji.EmojiIcon;
+
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
 public class UIWindow extends JFrame {
-    public JTextArea textArea;
+    public JTextPane textArea;
 
     public UIWindow() {
         // Настройка основного окна
@@ -13,11 +16,18 @@ public class UIWindow extends JFrame {
         setLayout(new GridLayout(2, 1));
 
         // Создание текстовой области
-        textArea = new JTextArea(19, 63);
+        textArea = new JTextPane();
         textArea.setBackground(Color.DARK_GRAY);
         textArea.setForeground(Color.WHITE); // Белый текст для контраста
-        textArea.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 18));
+        textArea.setFont(new Font("Noto Color Emoji", Font.PLAIN, 18)); // Noto Color Emoji; Segoe UI Emoji
         textArea.setEditable(false); // Только для отображения
+        EmojiIcon.getInstance().installEmojiSvg();
+
+//  create jtextpane with wrap text
+        textArea.setEditorKit(new AutoWrapText(textArea));
+
+// install this jtextpane to use emoji
+        EmojiIcon.getInstance().installTextPane(textArea);
 //        textArea.se
 
 

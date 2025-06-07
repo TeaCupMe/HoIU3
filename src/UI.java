@@ -99,7 +99,13 @@ public class UI {
 
     static void printToStream(String output, OutputStream stream) {
         try {
-            stream.write(output.getBytes(StandardCharsets.UTF_16));
+            if (stream.getClass()==JTextAreaOutputStream.class) {
+                stream.write(output.getBytes(StandardCharsets.UTF_16));
+            } else if (stream.getClass()==JTextPaneOutputStream.class) {
+                stream.write(output.getBytes(StandardCharsets.UTF_16));
+            } else {
+                stream.write(output.getBytes(StandardCharsets.UTF_8));
+            }
         } catch (IOException e) {
             Logger.getLogger().logError("IOException while printing to stream");
             throw new RuntimeException(e);

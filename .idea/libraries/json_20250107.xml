@@ -2,6 +2,8 @@
   <library name="json-20250107">
     <CLASSES>
       <root url="jar://$PROJECT_DIR$/libs/json-simple-1.1.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/swing-emoji-1.0.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/json-20250107.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
