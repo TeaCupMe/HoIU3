@@ -19,26 +19,27 @@ public class UI {
     // 0 - пустая земля
 
     Map<Integer, String> mapLookUpTable = Map.of(
-                0, "\uD83D\uDFE9",
-                1, "\uD83D\uDEA7",
-                2, "\uD83D\uDFE5",
-                3, "\uD83D\uDFE7",
-                8, "⬛",
-                9, "\uD83D\uDFE8",
-                10, "\uD83D\uDFEA",
+                0, "\uD83D\uDFE9",  // 🟩
+                1, "\uD83D\uDEA7",      // 🚧
+                2, "\uD83D\uDFE5",      // 🟥
+                3, "\uD83D\uDFE7",      // 🟧
+                8, "⬛",                // ⬛
+                9, "\uD83D\uDFE8",      // 🟨
+                10, "\uD83D\uDFEA",     // 🟪
                 11, "",
                 12, ""
             );
 
     Map<GameObjectType, String> gameObjectLookUpTable = Map.of(
-            GameObjectType.GAME_OBJECT_TYPE_HERO, "\uD83E\uDDD9", // 🧙
-            GameObjectType.GAME_OBJECT_TYPE_ARMY, "\uD83D\uDE00", // 𓀀
-            GameObjectType.GAME_OBJECT_TYPE_CASTLE, "\uD83C\uDFF0", // 🏰
-            GameObjectType.GAME_OBJECT_TYPE_ENEMY, "\uD83D\uDC00", // 🐀
-            GameObjectType.GAME_OBJECT_TYPE_TREASURE, "\uD83D\uDCB0", // 💰
-            GameObjectType.GAME_OBJECT_TYPE_TREASURE_SMALL, "\uD83D\uDC8E", // 💎
-            GameObjectType.GAME_OBJECT_TYPE_TREASURE_SPECIAL, "\uD83C\uDF7A", // 🍺
-            GameObjectType.GAME_OBJECT_TYPE_MATVEI, "\uD83E\uDD21" // 🤡
+            GameObjectType.GAME_OBJECT_TYPE_HERO, "\uD83E\uDDD9",               // 🧙
+            GameObjectType.GAME_OBJECT_TYPE_ARMY, "\uD83D\uDE00",               // 😀
+            GameObjectType.GAME_OBJECT_TYPE_CASTLE, "\uD83C\uDFF0",             // 🏰
+            GameObjectType.GAME_OBJECT_TYPE_ENEMY, "\uD83D\uDC00",              // 🐀
+            GameObjectType.GAME_OBJECT_TYPE_TREASURE, "\uD83C\uDF46",           // 🍆
+            GameObjectType.GAME_OBJECT_TYPE_TREASURE_SMALL, "\uD83D\uDC8E",     // 💎
+            GameObjectType.GAME_OBJECT_TYPE_TREASURE_BIG, "\uD83C\uDF7B",       // 🍻
+            GameObjectType.GAME_OBJECT_TYPE_TREASURE_SPECIAL, "\uD83C\uDF7A",   // 🍺
+            GameObjectType.GAME_OBJECT_TYPE_MATVEI, "\uD83E\uDD21"                  // 🤡
 
         );
 

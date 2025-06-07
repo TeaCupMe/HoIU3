@@ -23,7 +23,7 @@ public class Treasure extends GameObject {
 
             this.x = this.position%40;
             this.y = this.position/40;
-            this.type = GameObjectType.GAME_OBJECT_TYPE_TREASURE;
+            this.type = treasureTypeToGameObjectType(treasureType);
 
 
 
@@ -38,7 +38,10 @@ public class Treasure extends GameObject {
             case "1" -> GameObjectType.GAME_OBJECT_TYPE_TREASURE_SMALL;
             case "2" -> GameObjectType.GAME_OBJECT_TYPE_TREASURE_BIG;
             case "это просто *из*е*" -> GameObjectType.GAME_OBJECT_TYPE_TREASURE_SPECIAL;
-            default -> GameObjectType.GAME_OBJECT_TYPE_TREASURE;
+            default -> {
+                Logger.getLogger().logWarning("Unrecognized Treasure Type: " + _treasureType);
+                yield GameObjectType.GAME_OBJECT_TYPE_TREASURE;
+            }
         };
     }
 }
