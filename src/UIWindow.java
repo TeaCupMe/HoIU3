@@ -28,6 +28,17 @@ public class UIWindow extends JFrame {
 
         // Game field display area
         gameFieldTextArea = new JTextArea(19, 63);
+//        {
+//            @Override
+//            public FontMetrics getFontMetrics(Font font) {
+//                return new FontMetricsWrapper(super.getFontMetrics(font)) {
+//                    @Override
+//                    public int getHeight() {
+//                        return 40;  // Gives line height in pixels
+//                    }
+//                };
+//            }
+//        };
         gameFieldTextArea.setBackground(Color.DARK_GRAY);
         gameFieldTextArea.setForeground(Color.WHITE); // Белый текст для контраста
         gameFieldTextArea.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 18));
