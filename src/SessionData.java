@@ -58,7 +58,7 @@ public class SessionData {
             Logger.getLogger().logSuccess(this.enemies.size() + " enemies added");
 
             // Parse treasures
-            Logger.getLogger().logSuccess("Parsing treasures");
+            Logger.getLogger().logInfo("Parsing treasures");
             treasures = new ArrayList<>();
             JSONArray treasuresJSON = (JSONArray) jsonObject.get("treasures");
             Logger.getLogger().logWeak("Got array of " + treasuresJSON.size() + " treasures");
@@ -71,7 +71,7 @@ public class SessionData {
             Logger.getLogger().logSuccess(this.treasures.size() + " treasures added");
 
             jsonData = jsonObject;
-            Logger.getLogger().logSuccess("Successfully parsed SessionData: totalPlayers: " + totalPlayers + " currentPlayer: " + currentPlayer + " day: " + day);
+            Logger.getLogger().logSuccess("Successfully parsed SessionData: totalPlayers: " + totalPlayers + ", currentPlayer: " + currentPlayer + ", day: " + day);
         } catch (Exception e) {
             Logger.getLogger().logError("Parsed invalid session data!\n\tSessionData: " + e.getMessage());
             throw new RuntimeException("Invalid session data!\nMore info:\n"+e.getMessage());
