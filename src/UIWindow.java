@@ -1,31 +1,48 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
 public class UIWindow extends JFrame {
-    public JTextArea textArea;
+    private JTextArea gameFieldTextArea;
+    private JTextArea outputTextArea;
 
     public UIWindow() {
-        // Настройка основного окна
+
+        // General window setup
+        BufferedImage myAppImage = loadIcon("./resources/s1200.jpg");
+        if(myAppImage != null)
+        {
+            Logger.getLogger().logSuccess("Icon loaded");
+            setIconImage(myAppImage);
+        }
+        else {
+            Logger.getLogger().logWarning("Icon not loaded");
+        }
         setTitle("HOIU3");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(new GridLayout(2, 1));
-
-        // Создание текстовой области
-        textArea = new JTextArea(19, 63);
-        textArea.setBackground(Color.DARK_GRAY);
-        textArea.setForeground(Color.WHITE); // Белый текст для контраста
-        textArea.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 18));
-        textArea.setEditable(false); // Только для отображения
-//        textArea.se
+        setLayout(new BorderLayout(0,10));
 
 
-//        // Добавление в скролл-панель
-//        JScrollPane scrollPane = new JScrollPane(textArea);
-//        scrollPane.setBorder(BorderFactory.createEmptyBorder());
-//        add(scrollPane, BorderLayout.CENTER);
-        add(textArea);
+        // Game field display area
+        gameFieldTextArea = new JTextArea(19, 63);
+        gameFieldTextArea.setBackground(Color.DARK_GRAY);
+        gameFieldTextArea.setForeground(Color.WHITE); // Белый текст для контраста
+        gameFieldTextArea.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 18));
+        gameFieldTextArea.setEditable(false); // Только для отображения
+
+        // Output display area
+        outputTextArea = new JTextArea(10, 63);
+        outputTextArea.setBackground(Color.WHITE);
+        outputTextArea.setForeground(Color.BLACK); // Белый текст для контраста
+        outputTextArea.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 14));
+        outputTextArea.setEditable(false); // Только для отображения
+
+
+        add(gameFieldTextArea, BorderLayout.NORTH);
+        add(outputTextArea, BorderLayout.SOUTH);
         // Автоматическая настройка размера окна
         pack();
         setLocationRelativeTo(null); // Центрирование окна
@@ -42,7 +59,7 @@ public class UIWindow extends JFrame {
         });
     }
     void display() {
-        textArea.setText("\uD83E\uDDD9" +
+        gameFieldTextArea.setText("\uD83E\uDDD9" +
                 "\uD83D\uDE00" +
                 "\uD83C\uDFF0" +
                 "\uD83D\uDC00" +
@@ -50,5 +67,22 @@ public class UIWindow extends JFrame {
                 "\uD83D\uDC8E" +
                 "\uD83C\uDF7B" +
                 "\uD83C\uDF7A");
+    }
+
+    JTextArea getGameFieldTextArea() {
+        return gameFieldTextArea;
+    }
+    JTextArea getOutputTextField() {
+        return outputTextArea;
+    }
+    private BufferedImage loadIcon(String strPath)
+    {
+        Logger.getLogger().logInfo("Loading Icon: " + strPath);
+        try {
+            return ImageIO.read(new File(strPath));
+        } catch (IOException e) {
+            Logger.getLogger().logWarning("Failed to load icon: " + strPath);
+            return null;
+        }
     }
 }

@@ -19,7 +19,7 @@ public class Game {
     public static void main(String[] args) {
         Logger.getLogger().setLogLevel(2);
         window.setVisible(true);
-        ui = new UI(System.out, new JTextAreaOutputStream(window.textArea), System.in);//(System.out, System.in);
+        ui = new UI(System.out, new JTextAreaOutputStream(window.getGameFieldTextArea()), System.in);//(System.out, System.in);
 
         WebClient cl = new WebClient("http://hoiu3.crtech.space", "HOIU3U");
         SessionData gs = cl.fetchGameState();

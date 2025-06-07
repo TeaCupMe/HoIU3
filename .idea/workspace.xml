@@ -4,10 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f185e07b-06eb-4217-8a3e-207f309254a9" name="Changes" comment="First work on colored emoji rendering using swing">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="f185e07b-06eb-4217-8a3e-207f309254a9" name="Changes" comment="Cleanup">
       <change beforePath="$PROJECT_DIR$/src/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Logger.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Logger.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/UI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/UIWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UIWindow.java" afterDir="false" />
     </list>
@@ -275,7 +273,39 @@
       <option name="project" value="LOCAL" />
       <updated>1749314099732</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Small fix on Logger stack trace depth boundaries">
+      <option name="closed" value="true" />
+      <created>1749336945134</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1749336945134</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Cleanup">
+      <option name="closed" value="true" />
+      <created>1749336974559</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1749336974559</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Cleanup">
+      <option name="closed" value="true" />
+      <created>1749336986080</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1749336986080</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Cleanup">
+      <option name="closed" value="true" />
+      <created>1749336999366</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1749336999366</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -294,13 +324,14 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Integrated Logger and Formatter functionality." />
-    <MESSAGE value="Cleanup" />
     <MESSAGE value="Added optional stack trace for Logger.log(). Expanded JSON parsing to Player and Army" />
     <MESSAGE value="Added Enemy and treasure parsing and display" />
     <MESSAGE value="Logging cleanup" />
     <MESSAGE value="Treasure type resolution and display" />
     <MESSAGE value="updated .gitignore" />
-    <option name="LAST_COMMIT_MESSAGE" value="updated .gitignore" />
+    <MESSAGE value="Small fix on Logger stack trace depth boundaries" />
+    <MESSAGE value="Cleanup" />
+    <option name="LAST_COMMIT_MESSAGE" value="Cleanup" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

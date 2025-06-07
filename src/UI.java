@@ -36,8 +36,8 @@ public class UI {
             );
 
     Map<GameObjectType, String> gameObjectLookUpTable = Map.of(
-            GameObjectType.GAME_OBJECT_TYPE_HERO, "\uD83E\uDDD9",               // 🧙
-            GameObjectType.GAME_OBJECT_TYPE_ARMY, "\uD83D\uDE00",               // 😀
+            GameObjectType.GAME_OBJECT_TYPE_HERO, "\uD83E\uDDD9",               // 🧙🧙
+            GameObjectType.GAME_OBJECT_TYPE_ARMY, "\uD83E\uDDD9",               // 😀🧙
             GameObjectType.GAME_OBJECT_TYPE_CASTLE, "\uD83C\uDFF0",             // 🏰
             GameObjectType.GAME_OBJECT_TYPE_ENEMY, "\uD83D\uDC00",              // 🐀
             GameObjectType.GAME_OBJECT_TYPE_TREASURE, "\uD83C\uDF46",           // 🍆
