@@ -4,21 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f185e07b-06eb-4217-8a3e-207f309254a9" name="Changes" comment="Added optional stack trace for Logger.log(). Expanded JSON parsing to Player and Army">
-      <change afterPath="$PROJECT_DIR$/src/Enemy.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Treasure.java" afterDir="false" />
+    <list default="true" id="f185e07b-06eb-4217-8a3e-207f309254a9" name="Changes" comment="Treasure type resolution and display">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Army.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Army.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Castle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Castle.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GameField.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GameField.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GameObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GameObject.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GameObjectType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GameObjectType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Logger.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Logger.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SessionData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/SessionData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Unit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Unit.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -93,36 +81,36 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.Game.executor": "Run",
-    "Downloaded.Files.Path.Enabled": "true",
-    "JUnit.UITest.getIntInput.executor": "Run",
-    "Repository.Attach.Annotations": "false",
-    "Repository.Attach.JavaDocs": "false",
-    "Repository.Attach.Sources": "false",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit4",
-    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit4": "",
-    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
-    "create.test.in.the.same.root": "true",
-    "git-widget-placeholder": "master",
-    "last_opened_file_path": "C:/Users/alesh/OneDrive/projects/MGTU/TP/HoIU3/libs/json-20250107.jar",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "reference.settingsdialog.IDE.editor.colors.Console Font",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Game.executor&quot;: &quot;Run&quot;,
+    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;true&quot;,
+    &quot;JUnit.UITest.getIntInput.executor&quot;: &quot;Run&quot;,
+    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit4&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit4&quot;: &quot;&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
+    &quot;create.test.in.the.same.root&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/alesh/OneDrive/projects/MGTU/TP/HoIU3/libs/json-20250107.jar&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.IDE.editor.colors.Console Font&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
@@ -185,7 +173,8 @@
       <workItem from="1748699971536" duration="7643000" />
       <workItem from="1748766371796" duration="13979000" />
       <workItem from="1748839076099" duration="1828000" />
-      <workItem from="1749231588836" duration="5921000" />
+      <workItem from="1749231588836" duration="7957000" />
+      <workItem from="1749293993458" duration="3824000" />
     </task>
     <task id="LOCAL-00001" summary="Integrated Logger and Formatter functionality.">
       <option name="closed" value="true" />
@@ -211,7 +200,31 @@
       <option name="project" value="LOCAL" />
       <updated>1748692672341</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Added Enemy and treasure parsing and display">
+      <option name="closed" value="true" />
+      <created>1749239166241</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1749239166241</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Logging cleanup">
+      <option name="closed" value="true" />
+      <created>1749302478807</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1749302478807</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Treasure type resolution and display">
+      <option name="closed" value="true" />
+      <created>1749302508228</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1749302508228</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -232,7 +245,10 @@
     <MESSAGE value="Integrated Logger and Formatter functionality." />
     <MESSAGE value="Cleanup" />
     <MESSAGE value="Added optional stack trace for Logger.log(). Expanded JSON parsing to Player and Army" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added optional stack trace for Logger.log(). Expanded JSON parsing to Player and Army" />
+    <MESSAGE value="Added Enemy and treasure parsing and display" />
+    <MESSAGE value="Logging cleanup" />
+    <MESSAGE value="Treasure type resolution and display" />
+    <option name="LAST_COMMIT_MESSAGE" value="Treasure type resolution and display" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
