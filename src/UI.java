@@ -1,26 +1,31 @@
 import org.jetbrains.annotations.NotNull;
 
+import javax.swing.*;
+import java.awt.*;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 public class UI {
     // 🟥🟩🟫🟫🟧🟣
     int inputRetries = 0;
-    PrintStream outputStream;
-    PrintStream fieldStream;
+    OutputStream outputStream;
+    OutputStream fieldStream;
     InputStream inputStream;
     Scanner scanner;
-
+    JFrame frame = new JFrame("Текстовые поля");
+    JPanel panel = new JPanel(new GridLayout(2, 2, 5, 5));
     // 9 - дорога,
     // 8 - кратер после битвы(по нему ходить дороже),
     // 1, 2, 3 - препятствия,
     // 0 - пустая земля
 
     Map<Integer, String> mapLookUpTable = Map.of(
-                0, "\uD83D\uDFE9",  // 🟩
-                1, "\uD83D\uDEA7",      // 🚧
+                0, "⬜",  // ⬜
+                1, "❌",      // ❌
                 2, "\uD83D\uDFE5",      // 🟥
                 3, "\uD83D\uDFE7",      // 🟧
                 8, "⬛",                // ⬛
@@ -44,15 +49,15 @@ public class UI {
         );
 
     UI(OutputStream _output, InputStream _input) {
-        outputStream = new PrintStream(_output);
-        fieldStream = new PrintStream(_output);
+        outputStream = _output;
+        fieldStream = _output;
         inputStream = _input;
         scanner = new Scanner(inputStream);
     }
 
     UI(OutputStream _output, OutputStream _field, InputStream _input) {
-        outputStream = new PrintStream(_output);
-        fieldStream = new PrintStream(_field);
+        outputStream = _output;
+        fieldStream = _field;
         inputStream = _input;
         scanner = new Scanner(inputStream);
     }
@@ -92,32 +97,13 @@ public class UI {
 
     }
 
-    static void printToStream(String output, PrintStream stream) {
-        stream.print(output);
+    static void printToStream(String output, OutputStream stream) {
+        try {
+            stream.write(output.getBytes(StandardCharsets.UTF_16));
+        } catch (IOException e) {
+            Logger.getLogger().logError("IOException while printing to stream");
+            throw new RuntimeException(e);
+        }
     }
 
-    public int getIntInput(String query, int min, int max) {
-        int retries = inputRetries;
-        outputStream.println(query);
-        int input;
-        input = scanner.nextInt();
-        while ((input < min || input > max) && retries-- != 0) {
-            outputStream.println("Invalid input! Try again.\n");
-            outputStream.println(query);
-            input = scanner.nextInt();
-        }
-        return input;
-    }
-
-    public int getIntInput(String query, @NotNull Collection<Integer> validInputs) {
-        outputStream.println(query);
-        int input;
-        input = scanner.nextInt();
-        while ((!validInputs.contains(input)) && inputRetries-- != 0) {
-            outputStream.println("Invalid input! Try again.\n");
-            outputStream.println(query);
-            input = scanner.nextInt();
-        }
-        return input;
-    }
 }

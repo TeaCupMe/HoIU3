@@ -15,7 +15,6 @@ public class SessionData {
     ArrayList<Player> players;
     ArrayList<Enemy> enemies;
     ArrayList<Treasure> treasures;
-//    ArrayList<Treasure> treasures;
     Long gameState;
     Long day;
 
