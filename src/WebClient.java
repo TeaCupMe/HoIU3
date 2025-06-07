@@ -67,7 +67,6 @@ public class WebClient {
         HttpResponse<?> res = null;
         try {
             res = client.send(req, HttpResponse.BodyHandlers.ofString());
-            System.out.println(res.body());
             try {
                 return new SessionData((JSONObject) jsonParser.parse(res.body().toString()));
             } catch (ParseException e) {

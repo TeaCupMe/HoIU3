@@ -23,7 +23,6 @@ public class SessionData {
 
     SessionData(JSONObject jsonObject) {
         try {
-
             // plain fields in first layer of JSON
             Logger.getLogger().logInfo("Parsing session metadata");
             this.totalPlayers = (Long) (jsonObject.get("totalPlayers"));
