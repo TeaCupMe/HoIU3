@@ -4,12 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f185e07b-06eb-4217-8a3e-207f309254a9" name="Changes" comment="Refactoring and visual updates">
-      <change afterPath="$PROJECT_DIR$/src/SequentialKeyListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UIWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/UIWindow.java" afterDir="false" />
-    </list>
+    <list default="true" id="f185e07b-06eb-4217-8a3e-207f309254a9" name="Changes" comment="Implemented SequentialKeyListener for processing long user input" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -314,7 +309,15 @@
       <option name="project" value="LOCAL" />
       <updated>1749375051349</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Implemented SequentialKeyListener for processing long user input">
+      <option name="closed" value="true" />
+      <created>1749382668849</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1749382668849</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -341,7 +344,8 @@
     <MESSAGE value="Small fix on Logger stack trace depth boundaries" />
     <MESSAGE value="Cleanup" />
     <MESSAGE value="Refactoring and visual updates" />
-    <option name="LAST_COMMIT_MESSAGE" value="Refactoring and visual updates" />
+    <MESSAGE value="Implemented SequentialKeyListener for processing long user input" />
+    <option name="LAST_COMMIT_MESSAGE" value="Implemented SequentialKeyListener for processing long user input" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
