@@ -23,36 +23,40 @@ public class UIWindow extends JFrame {
         }
         setTitle("HOIU3");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(new BorderLayout(0,10));
+        setLayout(new BorderLayout(0,0));
+        setUndecorated( true );
+        getRootPane().setWindowDecorationStyle(JRootPane.ERROR_DIALOG);
+
+
 
 
         // Game field display area
         gameFieldTextArea = new JTextArea(19, 63);
-        gameFieldTextArea.setBackground(Color.DARK_GRAY);
-        gameFieldTextArea.setForeground(Color.WHITE); // Белый текст для контраста
+        gameFieldTextArea.setBackground(Color.BLACK);
+        gameFieldTextArea.setForeground(Color.decode("#39FF14"));
         gameFieldTextArea.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 18));
-        gameFieldTextArea.setEditable(false); // Только для отображения
+        gameFieldTextArea.setEditable(false);
 
         // Output display area
         outputTextArea = new JTextArea(10, 63);
-        outputTextArea.setBackground(Color.WHITE);
-        outputTextArea.setForeground(Color.BLACK); // Белый текст для контраста
-        outputTextArea.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 14));
-        outputTextArea.setEditable(false); // Только для отображения
+        outputTextArea.setBackground(Color.BLACK);
+        outputTextArea.setForeground(Color.decode("#39FF14"));
+        outputTextArea.append("Test text");
+        outputTextArea.setFont(new Font(Font.MONOSPACED, Font.BOLD, 14));
+        outputTextArea.setEditable(false);
 
 
-        add(gameFieldTextArea, BorderLayout.NORTH);
-        add(outputTextArea, BorderLayout.SOUTH);
-        // Автоматическая настройка размера окна
+        // Add all components
+        add(gameFieldTextArea, BorderLayout.PAGE_START);
+        add(outputTextArea, BorderLayout.PAGE_END);
         pack();
-        setLocationRelativeTo(null); // Центрирование окна
+        setLocationRelativeTo(null);
     }
 
     public static void main(String[] args) {
         // Запуск в потоке обработки событий
         SwingUtilities.invokeLater(() -> {
             UIWindow window = new UIWindow();
-
             window.display();
             window.setVisible(true);
 

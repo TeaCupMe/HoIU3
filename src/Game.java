@@ -16,6 +16,7 @@ public class Game {
 
     static UI ui; // General ui handler
     static UIWindow window = new UIWindow();
+
     public static void main(String[] args) {
         Logger.getLogger().setLogLevel(2);
         window.setVisible(true);
