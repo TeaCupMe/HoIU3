@@ -49,7 +49,7 @@ public class UIWindow extends JFrame {
         outputTextArea = new JTextArea(10, 63);
         outputTextArea.setBackground(Color.BLACK);
         outputTextArea.setForeground(Color.decode("#39FF14"));
-        outputTextArea.append("Test text");
+        outputTextArea.append("Test text\n");
         outputTextArea.setFont(new Font(Font.MONOSPACED, Font.BOLD, 14));
         outputTextArea.setEditable(false);
 
@@ -103,6 +103,7 @@ public class UIWindow extends JFrame {
 
     public String getLineInput() {
         int inputStartOffset;
+
         try {
             inputStartOffset = outputTextArea.getLineStartOffset(outputTextArea.getLineCount()-1);
         } catch (BadLocationException e) {
@@ -119,7 +120,7 @@ public class UIWindow extends JFrame {
             }
         }
         removeKeyListener(sequentialKeyListener);
-        Logger.getLogger().logSuccess("Finished waiting for sequential key listener, result: " + sequentialKeyListener.getCurrentString());
+        Logger.getLogger().tag("INPUT").logSuccess("Finished waiting for sequential key listener, result: " + sequentialKeyListener.getCurrentString());
         return sequentialKeyListener.getCurrentString();
     }
 

@@ -24,17 +24,17 @@ public class SequentialKeyListener implements KeyListener {
 
     public synchronized void keyPressed(@NotNull KeyEvent e) {
         if (!done) {
-            Logger.getLogger().logWeak("Key pressed: " + e.getKeyCode());
+            Logger.getLogger().tag("INPUT DEBUG").logInfo("Key pressed: " + e.getKeyCode());
             if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                Logger.getLogger().logWeak("Enter key pressed");
+                Logger.getLogger().tag("INPUT DEBUG").logWeak("Enter key pressed");
                 this.done = true;
             } else if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                Logger.getLogger().logWeak("Escape key pressed");
+                Logger.getLogger().tag("INPUT DEBUG").logWeak("Escape key pressed");
                 stringBuilder.setLength(0);
                 this.escaped = true;
                 this.done = true;
             } else if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
-                Logger.getLogger().logWeak("Backspace key pressed");
+                Logger.getLogger().tag("INPUT DEBUG").logWeak("Backspace key pressed");
                 if (!stringBuilder.isEmpty()) {
                     stringBuilder.deleteCharAt(stringBuilder.length() - 1);
                 }
@@ -53,7 +53,6 @@ public class SequentialKeyListener implements KeyListener {
             if (escaped || done) {
                 notify();
             }
-            Logger.getLogger().logWeak("String: " + getCurrentString() + "; done: " + done + "; escaped: " + escaped);
         }
 
 
@@ -69,7 +68,7 @@ public class SequentialKeyListener implements KeyListener {
     }
 
     private void setNewString() {
-        Logger.getLogger().logWeak("New string: " + getCurrentString() + " to be set at: " + startOffset + " to " + textArea.getText().length());
+        Logger.getLogger().tag("INPUT DEBUG").logWeak("New string: " + getCurrentString() + " to be set at: " + startOffset + " to " + textArea.getText().length());
         textArea.replaceRange(getCurrentString(), startOffset, textArea.getText().length());
     }
 }

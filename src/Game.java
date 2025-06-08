@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Scanner;
 
 
+import org.apache.maven.surefire.shared.io.filefilter.TrueFileFilter;
 import org.json.simple.JSONObject;
 
 // Основной класс игры
@@ -20,13 +21,14 @@ public class Game {
     static UIWindow window = new UIWindow();
 
     public static void main(String[] args) {
-        Logger.getLogger().setLogLevel(4);
+        setupLogger();
         window.setVisible(true);
         ui = new UI(System.out, new JTextAreaOutputStream(window.getGameFieldTextArea()), System.in);//(System.out, System.in);
 
         WebClient cl = new WebClient("http://hoiu3.crtech.space", "HOIU3U");
         SessionData gs = cl.fetchGameState();
         ui.drawField(gs.field);
+
         window.getLineInput();
     }
 
@@ -37,6 +39,20 @@ public class Game {
 //        JSONObject obj = new JSONObject();
 //
 //    }
+
+    static void setupLogger() {
+        Logger.getLogger().setLogLevel(4);
+        Logger.getLogger().logStackTrace = false;
+        Logger.getLogger().logLogType = true;
+        Logger.getLogger().logTag = true;
+        Logger.getLogger().allowSelectedTags = false;
+        Logger.getLogger().dropSelectedTags = true;
+        Logger.getLogger().visibleTags.add("TestTag");
+
+//        Logger.getLogger().disabledTags.add("INPUT");
+        Logger.getLogger().disabledTags.add("INPUT DEBUG");
+
+    }
 
 
 }
