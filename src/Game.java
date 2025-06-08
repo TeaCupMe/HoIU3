@@ -13,23 +13,30 @@ import org.json.simple.JSONObject;
 public class Game {
     public static ArrayList<Integer> myHeroes;
     public static ArrayList<GameObject> gameObjects = new ArrayList<>();
+    Player player;
+//    static
 
     static UI ui; // General ui handler
     static UIWindow window = new UIWindow();
 
     public static void main(String[] args) {
-        Logger.getLogger().setLogLevel(2);
+        Logger.getLogger().setLogLevel(4);
         window.setVisible(true);
         ui = new UI(System.out, new JTextAreaOutputStream(window.getGameFieldTextArea()), System.in);//(System.out, System.in);
 
         WebClient cl = new WebClient("http://hoiu3.crtech.space", "HOIU3U");
         SessionData gs = cl.fetchGameState();
         ui.drawField(gs.field);
+        window.getLineInput();
     }
 
+    void collectInitialData() {
+
+    }
 //    public static JSONObject createSessionJSON() {
 //        JSONObject obj = new JSONObject();
 //
 //    }
+
 
 }
