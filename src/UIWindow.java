@@ -1,6 +1,9 @@
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.text.BadLocationException;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -8,6 +11,11 @@ import java.io.IOException;
 public class UIWindow extends JFrame {
     private JTextArea gameFieldTextArea;
     private JTextArea outputTextArea;
+
+    private KeyListener interactiveKeyListener;
+    private final SequentialKeyListener sequentialKeyListener;
+
+    private String inputLine = "";
 
     public UIWindow() {
 
@@ -44,6 +52,9 @@ public class UIWindow extends JFrame {
         outputTextArea.append("Test text");
         outputTextArea.setFont(new Font(Font.MONOSPACED, Font.BOLD, 14));
         outputTextArea.setEditable(false);
+
+        // Init listeners
+        sequentialKeyListener = new SequentialKeyListener(outputTextArea);
 
 
         // Add all components
@@ -89,4 +100,27 @@ public class UIWindow extends JFrame {
             return null;
         }
     }
+
+    public String getLineInput() {
+        int inputStartOffset;
+        try {
+            inputStartOffset = outputTextArea.getLineStartOffset(outputTextArea.getLineCount()-1);
+        } catch (BadLocationException e) {
+            throw new RuntimeException(e);
+        }
+        sequentialKeyListener.setStartOffset(inputStartOffset);
+        outputTextArea.addKeyListener(sequentialKeyListener);
+        synchronized(sequentialKeyListener) {
+            try {
+                sequentialKeyListener.wait();
+            } catch (InterruptedException e) {
+                Logger.getLogger().logError("Interrupted while waiting for sequential key listener");
+                throw new RuntimeException(e);
+            }
+        }
+        removeKeyListener(sequentialKeyListener);
+        Logger.getLogger().logSuccess("Finished waiting for sequential key listener, result: " + sequentialKeyListener.getCurrentString());
+        return sequentialKeyListener.getCurrentString();
+    }
+
 }
