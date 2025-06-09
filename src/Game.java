@@ -53,18 +53,37 @@ public class Game {
             }
         }
 
+        Thread drawFieldThread = new Thread(new Runnable() {
+            public void run() {
+                while (true) {
+                    ui.drawField(gs.field);
+                    try {
+                        Thread.sleep(200);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+        });
+
+
         window.setVisible(true);
         collectInitialData();
+        gameObjects.add(new GameObject(4, 4, GameObjectType.GAME_OBJECT_TYPE_CURSOR));
+        drawFieldThread.start();
         gameLoop();
 
 
     }
 
     static void gameLoop() {
-        ui.drawField(gs.field);
-        if (player.canMove()) {
+//        ui.println("\u001b[31;1;4mHello\u001b[0m");
+        // Select action: select Hero, list Resources, end move
 
-        }
+
+        Logger.getLogger().tag("GameLoop").logInfo("Prompting user to select top-level action");
+        ui.println("Select action:");
+
 
     }
 
@@ -132,6 +151,7 @@ public class Game {
 //        Logger.getLogger().disabledTags.add("INPUT");
         Logger.getLogger().disabledTags.add("INPUT DEBUG");
         Logger.getLogger().disabledTags.add("OUTPUT DEBUG");
+        Logger.getLogger().disabledTags.add("GAME DEBUG");
     }
 
 
