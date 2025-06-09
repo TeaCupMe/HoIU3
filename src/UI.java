@@ -16,8 +16,7 @@ public class UI {
     OutputStream fieldStream;
     InputStream inputStream;
     Scanner scanner;
-    JFrame frame = new JFrame("Текстовые поля");
-    JPanel panel = new JPanel(new GridLayout(2, 2, 5, 5));
+    UIWindow window;
     // 9 - дорога,
     // 8 - кратер после битвы(по нему ходить дороже),
     // 1, 2, 3 - препятствия,
@@ -25,9 +24,9 @@ public class UI {
 
     Map<Integer, String> mapLookUpTable = Map.of(
                 0, "⬜",  // ⬜
-                1, "❌",      // ❌
-                2, "\uD83D\uDFE5",      // 🟥
-                3, "\uD83D\uDFE7",      // 🟧
+                1, "☢️",      // ❌🌋🌩️⚡❄️⛓️☢️
+                2, "⛰️",      // ⛰️
+                3, "\uD83D\uDFEA",      // 🌊
                 8, "⬛",                // ⬛
                 9, "\uD83D\uDFE8",      // 🟨
                 10, "\uD83D\uDFEA",     // 🟪
@@ -89,21 +88,46 @@ public class UI {
             }
             outputField.append("\n");
         }
-
-        UI.printToStream(outputField.toString(), fieldStream);
-
-
-
-
+        redrawField(outputField.toString());
     }
 
     static void printToStream(String output, OutputStream stream) {
         try {
-            stream.write(output.getBytes(StandardCharsets.UTF_16));
+            if (stream.getClass() == JTextAreaOutputStream.class) {
+                stream.write(output.getBytes(StandardCharsets.UTF_16));
+            } else {
+                stream.write(output.getBytes(StandardCharsets.UTF_8));
+            }
         } catch (IOException e) {
-            Logger.getLogger().logError("IOException while printing to stream");
+            Logger.getLogger().tag("UI").logError("IOException while printing to stream");
             throw new RuntimeException(e);
         }
+    }
+
+    void showHelloMessage() {
+        window.showHelloMessage();
+    }
+
+    void redrawField(String fieldString) {
+        window.showField(fieldString);
+    }
+
+    public String getLineInput(String prompt) {
+        print(prompt);
+        return window.getLineInput();
+    }
+
+    public void setUIWindow(UIWindow window) {
+        this.window = window;
+    }
+
+    public boolean print(String prompt) {
+        printToStream(prompt, outputStream);
+        return true;
+    }
+    public boolean println(String prompt) {
+        printToStream(prompt+"\n", outputStream);
+        return true;
     }
 
 }

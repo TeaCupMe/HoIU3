@@ -6,9 +6,10 @@ import javax.security.auth.login.LoginException;
 import java.security.KeyException;
 import java.util.ArrayList;
 
-public class Player {
+public class Player { // TODO add player id parsing
     ArrayList<Army> armies;
     Castle castle;
+    int id;
 
     Player(JSONObject jsonObject) {
         try {
@@ -19,6 +20,8 @@ public class Player {
 
             JSONArray armiesJSON =  (JSONArray)  jsonObject.get("armies");
             JSONObject castleJSON = (JSONObject) jsonObject.get("castle");
+
+
             if (armiesJSON == null) {
                 Logger.getLogger().tag("JSON").logError("Armies JSON is null");
                 throw new RuntimeException("armies JSON array is null");
@@ -38,9 +41,9 @@ public class Player {
                 Game.gameObjects.add(army);
             }
 
-            Castle cstl = new Castle(castleJSON);
-            this.castle = cstl;
-            Game.gameObjects.add(cstl);
+            Castle castle = new Castle(castleJSON);
+            this.castle = castle;
+            Game.gameObjects.add(castle);
 
             Logger.getLogger().tag("JSON").logSuccess("Successfully parsed player JSON");
 
@@ -48,6 +51,9 @@ public class Player {
             Logger.getLogger().tag("JSON").logError("Unable to construct Player from JSON");
             throw e;
         }
+    }
 
+    boolean canMove() {
+        return true
     }
 }

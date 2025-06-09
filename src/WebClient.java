@@ -15,13 +15,11 @@ import java.net.http.HttpResponse;
 public class WebClient {
     String url;
     String sessionID;
-    HttpClient client;
-    JSONParser jsonParser;
+    static HttpClient client = java.net.http.HttpClient.newHttpClient();
+    static JSONParser jsonParser = new JSONParser();
     WebClient(String url, String sessionID) {
         this.sessionID = sessionID;
         this.url = url;
-        this.client = java.net.http.HttpClient.newHttpClient();
-        this.jsonParser = new JSONParser();
     }
 
     public boolean checkIfMyMove() {
@@ -29,7 +27,7 @@ public class WebClient {
                 .uri(URI.create(url + "?id=%s".formatted(sessionID)))
                 .GET()
                 .build();
-        HttpResponse<?> res = null;
+        HttpResponse<?> res;
         try {
             res = client.send(req, HttpResponse.BodyHandlers.ofString());
             System.out.println(res.body());
@@ -55,11 +53,13 @@ public class WebClient {
         try {
             res = client.send(request, HttpResponse.BodyHandlers.ofString());
         } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
+            Logger.getLogger().tag("WebClient").logError("Error uploading game state: " + e.getMessage());
+            throw new RuntimeException(e);
         }
     }
 
     public SessionData fetchGameState() {
+        Logger.getLogger().tag("WebClient").logInfo("Fetching game state from " + url + "?id=%s".formatted(sessionID));
         HttpRequest req = HttpRequest.newBuilder()
                 .uri(URI.create(url + "?id=%s".formatted(sessionID)))
                 .GET()
@@ -70,12 +70,38 @@ public class WebClient {
             try {
                 return new SessionData((JSONObject) jsonParser.parse(res.body().toString()));
             } catch (ParseException e) {
-                e.printStackTrace();
+                Logger.getLogger().tag("WebClient").logError("Could not parse JSON response: " + e.toString());
+                throw new RuntimeException(e);
             }
 
         } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
+            Logger.getLogger().tag("WebClient").logError("Could not get response: " + e.toString());
+            throw new RuntimeException(e);
         }
-        return null;
     }
+
+    public static boolean verifySession(String url, String sessionID) {
+        Logger.getLogger().tag("WebClient").logInfo("Verifying session " + url + "?id=%s".formatted(sessionID));
+        HttpRequest req = HttpRequest.newBuilder()
+                .uri(URI.create(url + "?id=%s".formatted(sessionID)))
+                .GET()
+                .build();
+        HttpResponse<?> res;
+        try {
+            res = client.send(req, HttpResponse.BodyHandlers.ofString());
+            if (res.statusCode() == 200) {
+                Logger.getLogger().tag("WebClient").logSuccess("Session successfully verified");
+            } else {
+                Logger.getLogger().tag("WebClient").logError("Session verification failed");
+            }
+            return res.statusCode() == 200;
+        } catch (IOException | InterruptedException e) {
+            Logger.getLogger().tag("WebClient").logError("Could not get response: " + e.toString());
+            throw new RuntimeException(e);
+        }
+    }
+
+//    public static Integer[] getPlayersForSession(String sessionID) {
+//
+//    }
 }

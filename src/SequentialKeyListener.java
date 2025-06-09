@@ -27,6 +27,7 @@ public class SequentialKeyListener implements KeyListener {
             Logger.getLogger().tag("INPUT DEBUG").logInfo("Key pressed: " + e.getKeyCode());
             if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                 Logger.getLogger().tag("INPUT DEBUG").logWeak("Enter key pressed");
+//                stringBuilder.append("\n");
                 this.done = true;
             } else if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
                 Logger.getLogger().tag("INPUT DEBUG").logWeak("Escape key pressed");
@@ -40,7 +41,7 @@ public class SequentialKeyListener implements KeyListener {
                 }
             } else {
                 char c = e.getKeyChar();
-                if (Character.isLetter(c)) {
+                if (Character.isLetter(c) || Character.isDigit(c)) {
                     if (e.isShiftDown()) {
                         stringBuilder.append(Character.toUpperCase(c));
                     } else {
@@ -52,6 +53,8 @@ public class SequentialKeyListener implements KeyListener {
             setNewString();
             if (escaped || done) {
                 notify();
+                textArea.append("\n");
+                textArea.removeKeyListener(this);
             }
         }
 
@@ -70,5 +73,11 @@ public class SequentialKeyListener implements KeyListener {
     private void setNewString() {
         Logger.getLogger().tag("INPUT DEBUG").logWeak("New string: " + getCurrentString() + " to be set at: " + startOffset + " to " + textArea.getText().length());
         textArea.replaceRange(getCurrentString(), startOffset, textArea.getText().length());
+    }
+
+    public void reset() {
+        done = false;
+        escaped = false;
+        stringBuilder.setLength(0);
     }
 }

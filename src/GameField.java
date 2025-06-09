@@ -13,7 +13,7 @@ public class GameField {
         this.width = width;
     }
 
-    GameField(JSONObject jsonObject) {
+    GameField(JSONObject jsonObject) { // TODO add try-catch clause
         this.field = (String) jsonObject.get("data");
         this.height = (Long) jsonObject.get("height");
         this.width = (Long) jsonObject.get("width");

@@ -18,9 +18,6 @@ public class SessionData {
     Long gameState;
     Long day;
 
-
-
-
     SessionData(JSONObject jsonObject) {
         try {
             // plain fields in first layer of JSON
@@ -96,5 +93,37 @@ public class SessionData {
             Logger.getLogger().tag("JSON").logError("Failed to set field " + key + ": " + e.getMessage());
             return false;
         }
+    }
+
+    public Player getPlayerById(int id) {
+        for (Player player : players) {
+            if (player.id == id) {
+                return player;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public String toString() {
+        return "SessionData: totalPlayers: " +
+                totalPlayers +
+                ", currentPlayer: " +
+                currentPlayer +
+                ", day: " +
+                day +
+                ", gameState: " +
+                gameState;
+    }
+
+    public String toDataString() {
+        return "totalPlayers: " +
+                totalPlayers +
+                ", currentPlayer: " +
+                currentPlayer +
+                ", day: " +
+                day +
+                ", gameState: " +
+                gameState;
     }
 }
