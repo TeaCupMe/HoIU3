@@ -134,6 +134,28 @@ public class UI {
         return window.getLineInput();
     }
 
+    public int getActionSelectorInput(ArrayList<UserAction> actions) {
+        for (UserAction action : actions) {
+            int actionID = actions.indexOf(action);
+            println("\t" + actionID + " - " + action.name);
+        }
+        int selectedAction = -1;
+        String selectedActionString = "";
+
+        do {
+            try {
+                selectedActionString = getLineInput("Enter action: ");
+                selectedAction = Integer.parseInt(selectedActionString);
+            } catch (NumberFormatException e) {
+                Logger.getLogger().tag("INPUT").logError("NumberFormatException while getting action");
+                selectedAction = -1;
+            }
+        } while (!(selectedAction>=0 && selectedAction<actions.size()) && println("Incorrect action number!"));
+
+        return selectedAction;
+
+    }
+
     public void setUIWindow(UIWindow window) {
         this.window = window;
     }
