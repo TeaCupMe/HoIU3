@@ -79,12 +79,80 @@ public class Game {
     static void gameLoop() {
 //        ui.println("\u001b[31;1;4mHello\u001b[0m");
         // Select action: select Hero, list Resources, end move
+        try {
+            while (true) {
+                Logger.getLogger().tag("GameLoop").logInfo("Prompting user to select top-level action");
+                ui.println("Select action:");
+                ArrayList<UserAction> actions = new ArrayList<>();
 
+                // Act on Hero
+                actions.add(new UserAction("Act on hero") {
+                    public void act() {
+                        heroAction();
+                    }
+                });
 
-        Logger.getLogger().tag("GameLoop").logInfo("Prompting user to select top-level action");
-        ui.println("Select action:");
+                // Get info on Map
+                actions.add(new UserAction("Act on hero") {
+                    public void act() {
+                        heroAction();
+                    }
+                });
 
+                // List all available resources
+                actions.add(new UserAction("Show available resources") {
+                    public void act() {
+                        showResourcesAction();
+                    }
+                });
 
+                // End move
+                actions.add(new UserAction("End move") {
+                    public void act() {
+                        endMoveAction();
+                    }
+                });
+
+                // End game
+                actions.add(new UserAction("End game") {
+                    public void act() {
+                        endGame();
+                    }
+                });
+
+                // Run action Selector
+                runActionSelector(actions);
+
+            }
+        } catch (Exception e) {
+            Logger.getLogger().tag("Game Loop").logError(e.getMessage());
+        }
+    }
+
+    static void runActionSelector(ArrayList<UserAction> actions) {
+        int selectedAction = ui.getActionSelectorInput(actions);
+        actions.get(selectedAction).act();
+    }
+
+    static void heroAction() {
+        Logger.getLogger().tag("HeroAction").logInfo("Prompting user to select hero");
+    }
+
+    static void endMoveAction() {
+        Logger.getLogger().tag("EndMoveAction").logInfo("Ending move");
+    }
+
+    static void endGameAction() {
+        Logger.getLogger().tag("EndGameAction").logInfo("Ending game");
+    }
+
+    static void endGame() {
+        Logger.getLogger().tag("EndGame").logInfo("Ending game");
+        System.exit(0);
+    }
+
+    static void showResourcesAction() {
+        Logger.getLogger().tag("ShowResourcesAction").logInfo("Showing resources");
     }
 
     static void collectInitialData() {
@@ -108,8 +176,8 @@ public class Game {
         // Fetch game session
         Logger.getLogger().tag("Game").logInfo("Fetching game session");
         gs = cl.fetchGameState();
-        Logger.getLogger().tag("Game").logSuccess("Got game session: " + gs.toDataString());
-        ui.println("Got game session: " + gs.toDataString());
+        Logger.getLogger().tag("Game").logSuccess("Loaded game session: " + gs.toDataString());
+        ui.println("Loaded game session: " + gs.toDataString());
 
         // Get player id from user
 
