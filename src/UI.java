@@ -7,10 +7,16 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
+import java.sql.Time;
 import java.util.*;
 
 public class UI {
     // 🟥🟩🟫🟫🟧🟣
+    final static int CURSOR_FLICKER_OFFSET = 400;
+    long lastCursorSwap = 0;
+    boolean showCursor = false;
+    boolean cursorVisible = false;
+
     int inputRetries = 0;
     OutputStream outputStream;
     OutputStream fieldStream;
@@ -43,7 +49,8 @@ public class UI {
             GameObjectType.GAME_OBJECT_TYPE_TREASURE_SMALL, "\uD83D\uDC8E",     // 💎
             GameObjectType.GAME_OBJECT_TYPE_TREASURE_BIG, "\uD83C\uDF7B",       // 🍻
             GameObjectType.GAME_OBJECT_TYPE_TREASURE_SPECIAL, "\uD83C\uDF7A",   // 🍺
-            GameObjectType.GAME_OBJECT_TYPE_MATVEI, "\uD83E\uDD21"                  // 🤡
+            GameObjectType.GAME_OBJECT_TYPE_MATVEI, "\uD83E\uDD21",             // 🤡
+            GameObjectType.GAME_OBJECT_TYPE_CURSOR, "⬛"
 
         );
 
@@ -64,7 +71,6 @@ public class UI {
 
     public void drawField(@NotNull GameField gameField) {
         assert Game.gameObjects != null;
-
         MapTile[][] fieldBuffer = new MapTile[Math.toIntExact(gameField.height)][Math.toIntExact(gameField.width)];
 
         // Fill the map with 'ground-layer' tiles
@@ -76,7 +82,18 @@ public class UI {
 
         // overlap game objects over ground-layer
         for (GameObject obj: Game.gameObjects) {
-            fieldBuffer[obj.y][obj.x] = new MapTile(gameObjectLookUpTable.get(obj.type));
+            if (obj.type == GameObjectType.GAME_OBJECT_TYPE_CURSOR) {
+                long currentTime = System.currentTimeMillis();
+                if (currentTime - lastCursorSwap > CURSOR_FLICKER_OFFSET) {
+                    lastCursorSwap = currentTime;
+                    showCursor = !showCursor;
+                }
+                if (showCursor && cursorVisible) {
+                    fieldBuffer[obj.y][obj.x] = new MapTile(gameObjectLookUpTable.get(obj.type));
+                }
+            } else {
+                fieldBuffer[obj.y][obj.x] = new MapTile(gameObjectLookUpTable.get(obj.type));
+            }
         }
 
         // output everything
