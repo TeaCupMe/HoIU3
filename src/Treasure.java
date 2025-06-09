@@ -6,18 +6,18 @@ public class Treasure extends GameObject {
 
     Treasure(JSONObject jsonObject) {
         try {
-            Logger.getLogger().logInfo("Parsing Treasure Object");
-            Logger.getLogger().logWeak("Treasure Object: " + jsonObject.toString());
+            Logger.getLogger().tag("JSON").logWeak("Parsing Treasure Object");
+            Logger.getLogger().tag("JSON").logWeak("Treasure Object: " + jsonObject.toString());
 
             this.position = Integer.parseInt(jsonObject.get("position").toString());
             this.treasureType = jsonObject.get("type").toString();
 
             if (this.position <= 0) {
-                Logger.getLogger().logError("Army position is less than 0");
+                Logger.getLogger().tag("JSON").logError("Army position is less than 0");
                 throw new RuntimeException("Army position is less than 0");
             }
             if (this.position >= 40*20) {
-                Logger.getLogger().logError("Army position is too large");
+                Logger.getLogger().tag("JSON").logError("Army position is too large");
                 throw new RuntimeException("Army position is too large");
             }
 
@@ -28,7 +28,7 @@ public class Treasure extends GameObject {
 
 
         } catch (Exception e) {
-            Logger.getLogger().logError("Unable to construct Treasure object from JSON");
+            Logger.getLogger().tag("JSON").logError("Unable to construct Treasure object from JSON");
         }
 
     }
@@ -39,7 +39,7 @@ public class Treasure extends GameObject {
             case "2" -> GameObjectType.GAME_OBJECT_TYPE_TREASURE_BIG;
             case "это просто *из*е*" -> GameObjectType.GAME_OBJECT_TYPE_TREASURE_SPECIAL;
             default -> {
-                Logger.getLogger().logWarning("Unrecognized Treasure Type: " + _treasureType);
+                Logger.getLogger().tag("JSON").logWarning("Unrecognized Treasure Type: " + _treasureType);
                 yield GameObjectType.GAME_OBJECT_TYPE_TREASURE;
             }
         };

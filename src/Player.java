@@ -12,23 +12,26 @@ public class Player {
 
     Player(JSONObject jsonObject) {
         try {
-            Logger.getLogger().logInfo("Parsing player JSON");
-            Logger.getLogger().logWeak("Player JSON: " + jsonObject.toString());
+            Logger.getLogger().tag("JSON").logWeak("Parsing player JSON");
+            Logger.getLogger().tag("JSON").logWeak("Player JSON: " + jsonObject.toString());
+
+            id = Integer.parseInt(jsonObject.get("id").toString());
+
             JSONArray armiesJSON =  (JSONArray)  jsonObject.get("armies");
             JSONObject castleJSON = (JSONObject) jsonObject.get("castle");
             if (armiesJSON == null) {
-                Logger.getLogger().logError("Armies JSON is null");
+                Logger.getLogger().tag("JSON").logError("Armies JSON is null");
                 throw new RuntimeException("armies JSON array is null");
             }
             if (castleJSON == null) {
-                Logger.getLogger().logError("Castle JSON is null");
+                Logger.getLogger().tag("JSON").logError("Castle JSON is null");
                 throw new RuntimeException("castle JSON array is null");
             }
 
             armies = new ArrayList<>(armiesJSON.size());
 
             for (Object o : armiesJSON) {
-                Logger.getLogger().logInfo("Parsing Army " + o.toString());
+                Logger.getLogger().tag("JSON").logWeak("Parsing Army " + o.toString());
                 JSONObject armyJSON = (JSONObject) o;
                 Army army = new Army(armyJSON);
                 armies.add(army);
@@ -39,11 +42,10 @@ public class Player {
             this.castle = cstl;
             Game.gameObjects.add(cstl);
 
-            Logger.getLogger().logSuccess("Successfully parsed player JSON");
+            Logger.getLogger().tag("JSON").logSuccess("Successfully parsed player JSON");
 
         } catch (Exception e) {
-            Logger.getLogger().logError("Unable to construct Player from JSON");
-//            System.exit(1);
+            Logger.getLogger().tag("JSON").logError("Unable to construct Player from JSON");
             throw e;
         }
 
