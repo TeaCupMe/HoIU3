@@ -7,7 +7,10 @@ import java.security.KeyException;
 import java.util.ArrayList;
 
 public class Player { // TODO add player id parsing
-    ArrayList<Army> armies;
+//    ArrayList<Army> armies;
+
+    final static int MIN_STAMINA_TO_MOVE = 5;
+    ArrayList<Hero> heroes;
     Castle castle;
     int id;
 
@@ -31,14 +34,15 @@ public class Player { // TODO add player id parsing
                 throw new RuntimeException("castle JSON array is null");
             }
 
-            armies = new ArrayList<>(armiesJSON.size());
+            heroes = new ArrayList<>(armiesJSON.size());
 
             for (Object o : armiesJSON) {
                 Logger.getLogger().tag("JSON").logWeak("Parsing Army " + o.toString());
                 JSONObject armyJSON = (JSONObject) o;
-                Army army = new Army(armyJSON);
-                armies.add(army);
-                Game.gameObjects.add(army);
+                Hero hero = new Hero(new Army(armyJSON));
+//                Army army = new Army(armyJSON);
+                heroes.add(hero);
+                Game.gameObjects.add(hero);
             }
 
             Castle castle = new Castle(castleJSON);
@@ -54,6 +58,11 @@ public class Player { // TODO add player id parsing
     }
 
     boolean canMove() {
-        return true
+        for (Hero hero : heroes) {
+            if (hero.getStamina()>MIN_STAMINA_TO_MOVE) {
+                return true;
+            }
+        }
+        return false;
     }
 }

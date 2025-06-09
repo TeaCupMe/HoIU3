@@ -8,6 +8,12 @@ public class Hero extends GameObject {
         this.stamina = 0;
     }
 
+    Hero(Army army) {
+        super(army.x, army.y, GameObjectType.GAME_OBJECT_TYPE_HERO);
+        this.name = "Hero";
+        this.stamina = 100;
+    }
+
     public int getStamina() {
         return stamina;
     }
