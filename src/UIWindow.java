@@ -1,5 +1,6 @@
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.text.BadLocationException;
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -58,13 +59,14 @@ public class UIWindow extends JFrame {
         gameFieldTextArea.setForeground(Color.decode("#39FF14"));
         gameFieldTextArea.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 18));
         gameFieldTextArea.setEditable(false);
+//        gameFieldTextArea.setBorder(BorderFactory.createLineBorder(Color.black, 10));
 //        gameFieldTextArea.insert(fieldHandler, 0);
 
         // Output display area
         outputTextArea = new JTextArea(10, 63);
         outputTextArea.setBackground(Color.BLACK);
         outputTextArea.setForeground(Color.decode("#39FF14"));
-        outputTextArea.append("Test text\n");
+//        outputTextArea.append("Test text\n");
         outputTextArea.setFont(new Font(Font.MONOSPACED, Font.BOLD, 14));
         outputTextArea.setEditable(false);
 
@@ -78,7 +80,7 @@ public class UIWindow extends JFrame {
         jp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
         jp.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 //        jp.setViewportBorder(BorderFactory.createLineBorder(Color.black));
-        jp.setBorder(BorderFactory.createEmptyBorder());
+        jp.setBorder(BorderFactory.createLineBorder(Color.BLACK, 10));
         // Add all components
 
         add(jp, BorderLayout.PAGE_END);
