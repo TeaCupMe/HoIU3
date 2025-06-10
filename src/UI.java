@@ -2,13 +2,17 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
+import java.sql.Array;
 import java.sql.Time;
 import java.util.*;
+import java.util.concurrent.Callable;
+import java.util.function.Function;
 
 public class UI {
     // 🟥🟩🟫🟫🟧🟣
@@ -69,16 +73,20 @@ public class UI {
     }
 
 
-    public void drawField(@NotNull GameField gameField) {
+    private String drawField(@NotNull GameField gameField) {
         assert Game.gameObjects != null;
         MapTile[][] fieldBuffer = new MapTile[Math.toIntExact(gameField.height)][Math.toIntExact(gameField.width)];
 
         // Fill the map with 'ground-layer' tiles
-        for (int row = 0; row < gameField.height; row++){
-            for (int col = 0; col < gameField.width; col++){
-                fieldBuffer[row][col] = new MapTile(mapLookUpTable.get(Character.getNumericValue(gameField.field.charAt((int) (row*gameField.width + col)))));
-            }
+//        for (int row = 0; row < gameField.height; row++){
+//            for (int col = 0; col < gameField.width; col++){
+//                fieldBuffer[row][col] = new MapTile(mapLookUpTable.get(Character.getNumericValue(gameField.field.charAt((int) (row*gameField.width + col)))));
+//            }
+//        }
+        for (int y = 0; y < gameField.height; y++) {
+            if (gameField.width >= 0) System.arraycopy(gameField.fieldBuffer[y], 0, fieldBuffer[y], 0, gameField.width);
         }
+//        fieldBuffer = gameField.fieldBuffer.clone();
 
         // overlap game objects over ground-layer
         for (GameObject obj: Game.gameObjects) {
@@ -107,7 +115,8 @@ public class UI {
             }
             outputField.append("\n");
         }
-        redrawField(outputField.toString());
+        return outputField.toString();
+//        redrawField(outputField.toString());
     }
 
     static void printToStream(String output, OutputStream stream) {
@@ -127,13 +136,29 @@ public class UI {
         window.showHelloMessage();
     }
 
-    void redrawField(String fieldString) {
-        window.showField(fieldString);
+    void redrawField(GameField gameField) {
+        window.showField(drawField(gameField));
+    }
+
+    void redrawFieldSlow(GameField gameField, int lineDelay) {
+        window.showFieldSlow(drawField(gameField), lineDelay);
     }
 
     public String getLineInput(String prompt) {
         print(prompt);
         return window.getLineInput();
+    }
+
+    public void getInteractiveInput(Function<Integer, Boolean> listener, ArrayList<KeyEvent> keyEvents) {
+        window.getInteractiveInput(listener, keyEvents);
+    }
+
+
+    public void startInteractiveInput(Function<Integer, Boolean> listener, ArrayList<KeyEvent> keyEvents) {
+        window.startInteractiveInput(listener, keyEvents);
+    }
+    public void endInteractiveInput() {
+        window.endInteractiveInput();
     }
 
     public int getActionSelectorInput(ArrayList<UserAction> actions) {

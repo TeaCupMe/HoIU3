@@ -14,6 +14,8 @@ public class Player { // TODO add player id parsing
     Castle castle;
     int id;
 
+    int cursorX, cursorY;
+
     Player(JSONObject jsonObject) {
         try {
             Logger.getLogger().tag("JSON").logWeak("Parsing player JSON");

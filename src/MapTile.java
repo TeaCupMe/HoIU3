@@ -15,10 +15,18 @@ public class MapTile  {
     );
 
     String representation;
+    int type;
     String[] decorations = new String[2];
 
     MapTile(String representation) {
         this.representation = representation;
+        decorations[0] = "";
+        decorations[1] = "";
+    }
+
+    MapTile(int type) {
+        this.type = type;
+        this.representation = UI.mapLookUpTable.get(type);
         decorations[0] = "";
         decorations[1] = "";
     }

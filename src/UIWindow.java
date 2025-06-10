@@ -210,6 +210,22 @@ public class UIWindow extends JFrame {
         gameFieldTextArea.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 18));
     }
 
+    public void showFieldSlow(String fieldString, int lineDelay) {
+        enableField();
+        String[] lines = fieldString.split("\n");
+        gameFieldTextArea.setText("");
+        for (String line : lines) {
+            gameFieldTextArea.append(line + "\n");
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                Logger.getLogger().tag("Interrupted while printing field");
+                throw new RuntimeException(e);
+            }
+        }
+//        gameFieldTextArea.setText(fieldString);
+    }
+
     public void showField(String fieldString) {
         enableField();
         gameFieldTextArea.setText(fieldString);

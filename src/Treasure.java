@@ -1,8 +1,13 @@
 import org.json.simple.JSONObject;
 
+import java.util.Random;
+import java.util.random.RandomGenerator;
+
 public class Treasure extends GameObject {
     int position;
     String treasureType;
+    int treasureValue;
+    final static int MINIMUM_TREASURE_VALUE = 50;
 
     Treasure(JSONObject jsonObject) {
         try {
@@ -25,7 +30,19 @@ public class Treasure extends GameObject {
             this.y = this.position/40;
             this.type = treasureTypeToGameObjectType(treasureType);
 
-
+            switch (type) {
+                case GAME_OBJECT_TYPE_TREASURE_SMALL:
+                    this.treasureValue = MINIMUM_TREASURE_VALUE + (int)(Math.random()*20);
+                    break;
+                case GAME_OBJECT_TYPE_TREASURE_BIG:
+                    this.treasureValue = MINIMUM_TREASURE_VALUE + (int)(Math.random()*200);
+                    break;
+                case GAME_OBJECT_TYPE_TREASURE:
+                    this.treasureValue = MINIMUM_TREASURE_VALUE + (int)(Math.random()*100);
+                    break;
+                case GAME_OBJECT_TYPE_TREASURE_SPECIAL:
+                    this.treasureValue = MINIMUM_TREASURE_VALUE + (int)(Math.random()*1000);
+            }
 
         } catch (Exception e) {
             Logger.getLogger().tag("JSON").logError("Unable to construct Treasure object from JSON");

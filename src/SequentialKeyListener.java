@@ -30,11 +30,13 @@ public class SequentialKeyListener implements KeyListener {
 //                stringBuilder.append("\n");
                 this.done = true;
             } else if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+                e.consume();
                 Logger.getLogger().tag("INPUT DEBUG").logWeak("Escape key pressed");
                 stringBuilder.setLength(0);
                 this.escaped = true;
                 this.done = true;
             } else if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
+                e.consume();
                 Logger.getLogger().tag("INPUT DEBUG").logWeak("Backspace key pressed");
                 if (!stringBuilder.isEmpty()) {
                     stringBuilder.deleteCharAt(stringBuilder.length() - 1);
@@ -52,6 +54,7 @@ public class SequentialKeyListener implements KeyListener {
 
             setNewString();
             if (escaped || done) {
+                if (escaped) stringBuilder.setLength(0);
                 notify();
                 textArea.append("\n");
                 textArea.removeKeyListener(this);

@@ -6,6 +6,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 // Основной класс игры
 public class Game {
     static final boolean showSplashScreen = true;
+    static final int FIELD_REDRAW_TIMEOUT = 50;
 
     public static ArrayList<Integer> myHeroes;
     public static ArrayList<GameObject> gameObjects = new ArrayList<>();
@@ -16,7 +17,7 @@ public class Game {
     static UI ui; // General ui handler
     static UIWindow window;
     static WebClient cl;
-    static SessionData gs;
+    public static SessionData gs;
     static Thread splashScreenThread;
     static Cursor cursor;
 
@@ -49,9 +50,9 @@ public class Game {
         Thread drawFieldThread = new Thread(new Runnable() {
             public void run() {
                 while (true) {
-                    ui.drawField(gs.field);
+                    ui.redrawField(gs.field);
                     try {
-                        Thread.sleep(200);
+                        Thread.sleep(FIELD_REDRAW_TIMEOUT);
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
                     }
@@ -61,6 +62,10 @@ public class Game {
 
 
         window.setVisible(true);
+//        window.getOutputTextField().setFocusable(true);
+//        window.getOutputTextField().requestFocus();
+//        window.debugFocus();
+
         collectInitialData();
 //        gameObjects.add(new GameObject(4, 4, GameObjectType.GAME_OBJECT_TYPE_CURSOR));
         drawFieldThread.start();
@@ -81,14 +86,14 @@ public class Game {
                 // Act on Hero
                 actions.add(new UserAction("Act on hero") {
                     public void act() {
-                        heroAction();
+                        chooseHeroAction();
                     }
                 });
 
                 // Get info on Map
-                actions.add(new UserAction("Act on hero") {
+                actions.add(new UserAction("Show cursor") {
                     public void act() {
-                        heroAction();
+                        showCursorAction();
                     }
                 });
 
@@ -109,7 +114,7 @@ public class Game {
                 // End game
                 actions.add(new UserAction("End game") {
                     public void act() {
-                        endGame();
+                        endGameAction();
                     }
                 });
 
@@ -127,16 +132,68 @@ public class Game {
         actions.get(selectedAction).act();
     }
 
-    static void heroAction() {
+    static void chooseHeroAction() {
         Logger.getLogger().tag("HeroAction").logInfo("Prompting user to select hero");
+        ui.println("Select hero:");
+        ArrayList<UserAction> actions = new ArrayList<>();
+        for (int i = 0; i < player.heroes.size(); i++) {
+            int heroID = i;
+            actions.add(new UserAction(player.heroes.get(heroID).description()) {
+                public void act() {
+                    actOnHero(player.heroes.get(heroID));
+                }
+            });
+        }
+        runActionSelector(actions);
     }
 
-    static void endMoveAction() {
+    static void showCursorAction() {
+        Logger.getLogger().tag("ShowCursorAction").logInfo("Prompting user to select cursor");
+
+        cursor = new Cursor(player.getCursorX(), player.getCursorY());
+        gameObjects.add(cursor);
+
+        ui.enableCursor = true;
+        ui.println("Cursor shown. Press Enter to view info about tile or Escape to exit");
+
+        ArrayList<KeyEvent> keyEvents = new ArrayList<>();
+        AtomicInteger keyCode = new AtomicInteger(0);
+        AtomicBoolean newInput = new AtomicBoolean(false);
+        ui.startInteractiveInput(integer -> {
+            keyCode.set(integer);
+            newInput.set(true);
+            return true;
+        }, keyEvents);
+
+
+        while (cursor.getCursorInput(keyCode, newInput, KeyEvent.VK_ESCAPE, KeyEvent.VK_ENTER)) {
+            ui.println("Tile (%d; %d): %s".formatted(cursor.x, cursor.y, describeTileUnder(cursor)));
+        }
+            Logger.getLogger().tag("INTERACTIVE INPUT DEBUG").logInfo("Escaped from cursor action");
+
+        gameObjects.remove(cursor);
+        cursor = null;
+
+        ui.endInteractiveInput();
+        ui.enableCursor = false;
+    }
+
+    static String describeTileUnder(GameObject occupant) {
+        for (GameObject g : gameObjects) {
+            if (g.intersects(occupant) && g.getClass()!=Cursor.class) {
+                return g.description();
+            }
+        }
+        return gs.field.fieldBuffer[occupant.y][occupant.x].description();
+    }
+
+    static void endMoveAction() { // TODO implement
         Logger.getLogger().tag("EndMoveAction").logInfo("Ending move");
     }
 
-    static void endGameAction() {
+    static void endGameAction() { // TODO implement
         Logger.getLogger().tag("EndGameAction").logInfo("Ending game");
+        endGame();
     }
 
     static void endGame() {
@@ -144,8 +201,71 @@ public class Game {
         System.exit(0);
     }
 
-    static void showResourcesAction() {
+    static void showResourcesAction() { // TODO implement
         Logger.getLogger().tag("ShowResourcesAction").logInfo("Showing resources");
+    }
+
+    static void actOnHero(Hero hero) {
+        Logger.getLogger().tag("actOnHero").logInfo("Acting on hero");
+        ArrayList<UserAction> actions = new ArrayList<>();
+        if (hero.intersects(player.castle)) {
+            // TODO implement buying stuff in castle
+        }
+        actions.add(new UserAction("Move") {
+            @Override
+            public void act() {
+                moveHero(hero);
+            }
+        });
+
+        actions.add(new UserAction("Describe Army") {
+            @Override
+            public void act() {
+                ui.println("Hero army: " + hero.army.description());
+            }
+        });
+        runActionSelector(actions);
+    }
+
+    static void moveHero(Hero hero) {
+        // Show cursor to let user select, where to move
+        cursor = new Cursor(hero.x, hero.y);
+        gameObjects.add(cursor);
+
+        ui.enableCursor = true;
+
+
+        ArrayList<KeyEvent> keyEvents = new ArrayList<>();
+        AtomicInteger keyCode = new AtomicInteger(0);
+        AtomicBoolean newInput = new AtomicBoolean(false);
+
+        ui.startInteractiveInput(integer -> {
+            keyCode.set(integer);
+            newInput.set(true);
+            return true;
+        }, keyEvents);
+
+        AtomicBoolean cursorInputResult = new AtomicBoolean(false);
+
+        Thread cursorThread = new Thread(() -> {
+            cursorInputResult.set(cursor.getCursorInput(keyCode, newInput, KeyEvent.VK_ESCAPE, KeyEvent.VK_ENTER));
+        });
+        cursorThread.start();
+
+//        PathFinder pathFinder = new PathFinder(gs.field, gameObjects);
+
+        while (cursorThread.isAlive()) {
+            if (cursor.hasMoved.get()) {
+                Logger.getLogger().tag("Hero Control DEBUG").logInfo("New Cursor position: " + cursor.x + ", " + cursor.y);
+//                pathFinder.drawPath(hero, cursor);
+                cursor.hasMoved.set(false);
+            }
+        }
+
+        ui.endInteractiveInput();
+        gameObjects.remove(cursor);
+        cursor = null;
+        ui.enableCursor = false;
     }
 
     static void collectInitialData() {
@@ -171,6 +291,8 @@ public class Game {
         gs = cl.fetchGameState();
         Logger.getLogger().tag("Game").logSuccess("Loaded game session: " + gs.toDataString());
         ui.println("Loaded game session: " + gs.toDataString());
+        ui.redrawFieldSlow(gs.field, 100);
+
 
         // Get player id from user
 
@@ -184,7 +306,7 @@ public class Game {
                 Logger.getLogger().tag("Game").logError("Error parsing user id: " + input);
             }
 
-        } while (!((playerID < gs.totalPlayers) && (playerID >= 0)) && ui.println(""));
+        } while (!((playerID < gs.totalPlayers) && (playerID >= 0)) && ui.println("Incorrect player id! Try again?"));
         Logger.getLogger().tag("Game").logSuccess("Got player id: " + playerID);
         ui.println("Your player id: " + playerID);
 

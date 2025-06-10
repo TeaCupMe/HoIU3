@@ -1,6 +1,7 @@
 public class Hero extends GameObject {
     private String name;
     private int stamina;
+    Army army;
 
     Hero(int x, int y, String name) {
         super(x, y, GameObjectType.GAME_OBJECT_TYPE_HERO);
@@ -12,7 +13,10 @@ public class Hero extends GameObject {
         super(army.x, army.y, GameObjectType.GAME_OBJECT_TYPE_HERO);
         this.name = "Hero";
         this.stamina = 100;
+        this.army = army;
     }
+
+
 
     public int getStamina() {
         return stamina;
