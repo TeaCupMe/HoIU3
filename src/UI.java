@@ -14,8 +14,8 @@ public class UI {
     // 🟥🟩🟫🟫🟧🟣
     final static int CURSOR_FLICKER_OFFSET = 400;
     long lastCursorSwap = 0;
-    boolean showCursor = false;
-    boolean cursorVisible = false;
+    boolean enableCursor = false;
+    private boolean cursorVisible = false;
 
     int inputRetries = 0;
     OutputStream outputStream;
@@ -28,7 +28,7 @@ public class UI {
     // 1, 2, 3 - препятствия,
     // 0 - пустая земля
 
-    Map<Integer, String> mapLookUpTable = Map.of(
+    static Map<Integer, String> mapLookUpTable = Map.of(
                 0, "⬜",  // ⬜
                 1, "☢️",      // ❌🌋🌩️⚡❄️⛓️☢️
                 2, "⛰️",      // ⛰️
@@ -50,9 +50,8 @@ public class UI {
             GameObjectType.GAME_OBJECT_TYPE_TREASURE_BIG, "\uD83C\uDF7B",       // 🍻
 //            GameObjectType.GAME_OBJECT_TYPE_TREASURE_SPECIAL, "\uD83C\uDF7A",   // 🍺
             GameObjectType.GAME_OBJECT_TYPE_MATVEI, "\uD83E\uDD21",             // 🤡
-            GameObjectType.GAME_OBJECT_TYPE_CURSOR, "⬛"
-
             GameObjectType.GAME_OBJECT_TYPE_CURSOR, "⬛",
+            GameObjectType.GAME_OBJECT_TYPE_PATH, "⬛"
         );
 
     UI(OutputStream _output, InputStream _input) {

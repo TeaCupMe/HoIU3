@@ -5,9 +5,14 @@ import javax.swing.text.BadLocationException;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.concurrent.Callable;
+import java.util.function.Function;
 
 public class UIWindow extends JFrame {
     String fieldHandler = """ 
@@ -26,7 +31,7 @@ public class UIWindow extends JFrame {
     private JTextArea gameFieldTextArea;
     private JTextArea outputTextArea;
 
-    private KeyListener interactiveKeyListener;
+    private final InteractiveKeyListener interactiveKeyListener;
     private final SequentialKeyListener sequentialKeyListener;
 
     private String inputLine = "";
@@ -73,6 +78,7 @@ public class UIWindow extends JFrame {
 
         // Init listeners
         sequentialKeyListener = new SequentialKeyListener(outputTextArea);
+        interactiveKeyListener = new InteractiveKeyListener();
 
 //        gameFieldTextArea.setPreferredSize(gameFieldTextArea.getSize());
 //        outputTextArea.setPreferredSize(outputTextArea.getSize());
@@ -131,6 +137,53 @@ public class UIWindow extends JFrame {
             return null;
         }
     }
+
+    public void getInteractiveInput(Function<Integer, Boolean> listener, ArrayList<KeyEvent> keyEvents) {
+        interactiveKeyListener.setKeyEvents(keyEvents);
+        outputTextArea.addKeyListener(interactiveKeyListener);
+        synchronized(interactiveKeyListener) {
+            try {
+                interactiveKeyListener.wait();
+            } catch (InterruptedException e) {
+                Logger.getLogger().logError("Interrupted while waiting for interactive key listener");
+                throw new RuntimeException(e);
+            }
+        }
+        removeKeyListener(interactiveKeyListener);
+    }
+
+    public void getInteractiveInput(ArrayList<KeyEvent> keyEvents) {
+        interactiveKeyListener.setKeyEvents(keyEvents);
+        outputTextArea.addKeyListener(interactiveKeyListener);
+        synchronized(interactiveKeyListener) {
+            try {
+                interactiveKeyListener.wait();
+            } catch (InterruptedException e) {
+                Logger.getLogger().logError("Interrupted while waiting for interactive key listener");
+                throw new RuntimeException(e);
+            }
+        }
+        removeKeyListener(interactiveKeyListener);
+    }
+
+    public void startInteractiveInput(Function<Integer, Boolean> listener, ArrayList<KeyEvent> keyEvents) {
+        interactiveKeyListener.setKeyEvents(keyEvents);
+        interactiveKeyListener.setListener(listener);
+        outputTextArea.addKeyListener(interactiveKeyListener);
+//        synchronized(interactiveKeyListener) {
+//            try {
+//                interactiveKeyListener.wait();
+//            } catch (InterruptedException e) {
+//                Logger.getLogger().logError("Interrupted while waiting for interactive key listener");
+//                throw new RuntimeException(e);
+//            }
+//        }
+//        removeKeyListener(interactiveKeyListener);
+    }
+    public void endInteractiveInput() {
+        removeKeyListener(interactiveKeyListener);
+    }
+
 
     public String getLineInput() {
         int inputStartOffset;
