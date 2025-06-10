@@ -11,4 +11,9 @@ public class Castle extends GameObject{
         this.y = position/40;
         this.type = GameObjectType.GAME_OBJECT_TYPE_CASTLE;
     }
+
+    @Override
+    public String description() {
+        return "Castle";
+    }
 }

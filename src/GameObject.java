@@ -10,6 +10,11 @@ public class GameObject {
     GameObject() {
         
     }
+
+    public String description() {
+        return "Generic Game Object of type " + type + " at " + x + ", " + y;
+    }
+    }
 }
 
 

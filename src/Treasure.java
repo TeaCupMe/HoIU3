@@ -44,4 +44,9 @@ public class Treasure extends GameObject {
             }
         };
     }
+
+    @Override
+    public String description() {
+        return "Treasure";
+    }
 }

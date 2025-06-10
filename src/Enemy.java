@@ -45,4 +45,12 @@ public class Enemy extends GameObject {
         }
     }
 
+    @Override
+    public String description() {
+        int totalNumber = 0;
+        for (Unit u : units) {
+            totalNumber += u.getNumber();
+        }
+        return "Enemy with " + this.units.size() + " units. Total: " + totalNumber;
+    }
 }

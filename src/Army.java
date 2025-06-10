@@ -67,4 +67,10 @@ public class Army extends GameObject {
         }
         return cumulativeCount;
     }
+
+    @Override
+    public String description() {
+        return "Army of " + this.units.size() + " units. Total: " + this.getCumulativeCount();
+    }
+
 }

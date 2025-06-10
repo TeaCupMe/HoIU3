@@ -1,4 +1,13 @@
+import java.util.Map;
 public class MapTile  {
+    Map<Integer, String> tileTypeToDescription = Map.of(
+            0, "Empty land",
+            1, "Obstruction type 1",
+            2, "Obstruction type 2",
+            3, "Obstruction type 3",
+            8, "Graveyard",
+            9, "Road"
+    );
     String representation;
     String[] decorations = new String[2];
 
@@ -10,5 +19,9 @@ public class MapTile  {
 
     public String toString() {
         return decorations[0] + representation + decorations[1];
+    }
+
+    public String description() {
+        return tileTypeToDescription.get(type);
     }
 }

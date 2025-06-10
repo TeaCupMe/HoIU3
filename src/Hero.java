@@ -26,5 +26,9 @@ public class Hero extends GameObject {
 //    boolean checkIfCanMove(int requiredStamina, int distance) {
 //        if (requiredStamina>)
 //    }
+    @Override
+    public String description() {
+        return "Hero " + name + ", Stamina: " + stamina;
+    }
 
 }
