@@ -1,5 +1,10 @@
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
+
 public class MapTile  {
+
+    static final ArrayList<Integer> walkableTiles = new ArrayList<>(Arrays.asList(0, 8, 9));
     Map<Integer, String> tileTypeToDescription = Map.of(
             0, "Empty land",
             1, "Obstruction type 1",
@@ -8,6 +13,7 @@ public class MapTile  {
             8, "Graveyard",
             9, "Road"
     );
+
     String representation;
     String[] decorations = new String[2];
 
@@ -23,5 +29,9 @@ public class MapTile  {
 
     public String description() {
         return tileTypeToDescription.get(type);
+    }
+
+    public boolean isWalkable() {
+        return walkableTiles.contains(type);
     }
 }

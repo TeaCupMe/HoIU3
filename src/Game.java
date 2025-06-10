@@ -1,15 +1,7 @@
-import java.awt.event.WindowEvent;
-import java.io.IOException;
-import java.io.PrintStream;
-import java.net.http.HttpClient;
-import java.nio.charset.StandardCharsets;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-
-
-import org.apache.maven.surefire.shared.io.filefilter.TrueFileFilter;
-import org.json.simple.JSONObject;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 
 // Основной класс игры
 public class Game {
@@ -26,6 +18,7 @@ public class Game {
     static WebClient cl;
     static SessionData gs;
     static Thread splashScreenThread;
+    static Cursor cursor;
 
     public static void main(String[] args) {
         setupLogger();
@@ -69,7 +62,7 @@ public class Game {
 
         window.setVisible(true);
         collectInitialData();
-        gameObjects.add(new GameObject(4, 4, GameObjectType.GAME_OBJECT_TYPE_CURSOR));
+//        gameObjects.add(new GameObject(4, 4, GameObjectType.GAME_OBJECT_TYPE_CURSOR));
         drawFieldThread.start();
         gameLoop();
 

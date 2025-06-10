@@ -65,4 +65,11 @@ public class Player { // TODO add player id parsing
         }
         return false;
     }
+
+    public int getCursorX() {
+        return cursorX;
+    }
+    public int getCursorY() {
+        return cursorY;
+    }
 }

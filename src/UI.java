@@ -48,10 +48,11 @@ public class UI {
             GameObjectType.GAME_OBJECT_TYPE_TREASURE, "\uD83C\uDF46",           // 🍆
             GameObjectType.GAME_OBJECT_TYPE_TREASURE_SMALL, "\uD83D\uDC8E",     // 💎
             GameObjectType.GAME_OBJECT_TYPE_TREASURE_BIG, "\uD83C\uDF7B",       // 🍻
-            GameObjectType.GAME_OBJECT_TYPE_TREASURE_SPECIAL, "\uD83C\uDF7A",   // 🍺
+//            GameObjectType.GAME_OBJECT_TYPE_TREASURE_SPECIAL, "\uD83C\uDF7A",   // 🍺
             GameObjectType.GAME_OBJECT_TYPE_MATVEI, "\uD83E\uDD21",             // 🤡
             GameObjectType.GAME_OBJECT_TYPE_CURSOR, "⬛"
 
+            GameObjectType.GAME_OBJECT_TYPE_CURSOR, "⬛",
         );
 
     UI(OutputStream _output, InputStream _input) {
@@ -83,13 +84,15 @@ public class UI {
         // overlap game objects over ground-layer
         for (GameObject obj: Game.gameObjects) {
             if (obj.type == GameObjectType.GAME_OBJECT_TYPE_CURSOR) {
-                long currentTime = System.currentTimeMillis();
-                if (currentTime - lastCursorSwap > CURSOR_FLICKER_OFFSET) {
-                    lastCursorSwap = currentTime;
-                    showCursor = !showCursor;
-                }
-                if (showCursor && cursorVisible) {
-                    fieldBuffer[obj.y][obj.x] = new MapTile(gameObjectLookUpTable.get(obj.type));
+                if (enableCursor) {
+                    long currentTime = System.currentTimeMillis();
+                    if (currentTime - lastCursorSwap > CURSOR_FLICKER_OFFSET) {
+                        lastCursorSwap = currentTime;
+                        cursorVisible = !cursorVisible;
+                    }
+                    if (cursorVisible) {
+                        fieldBuffer[obj.y][obj.x] = new MapTile(gameObjectLookUpTable.get(obj.type));
+                    }
                 }
             } else {
                 fieldBuffer[obj.y][obj.x] = new MapTile(gameObjectLookUpTable.get(obj.type));

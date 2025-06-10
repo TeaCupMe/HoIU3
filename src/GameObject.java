@@ -14,6 +14,9 @@ public class GameObject {
     public String description() {
         return "Generic Game Object of type " + type + " at " + x + ", " + y;
     }
+
+    public boolean intersects(GameObject other) {
+        return this.x==other.x && this.y==other.y;
     }
 }
 
