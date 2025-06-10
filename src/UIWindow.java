@@ -92,10 +92,8 @@ public class UIWindow extends JFrame {
         add(jp, BorderLayout.PAGE_END);
         add(gameFieldTextArea, BorderLayout.PAGE_START);
 
+        addWindowListener(new WindowListenerSetFocusOn(outputTextArea));
 
-
-//        setComponentZOrder(gameFieldTextArea, 1);
-//        setComponentZOrder(outputTextArea, 0);
         pack();
         setLocationRelativeTo(null);
 
@@ -188,11 +186,7 @@ public class UIWindow extends JFrame {
     public String getLineInput() {
         int inputStartOffset;
         sequentialKeyListener.reset();
-//        try {
-            inputStartOffset = outputTextArea.getText().length();
-//        } catch (BadLocationException e) {
-//            throw new RuntimeException(e);
-//        }
+        inputStartOffset = outputTextArea.getText().length();
         sequentialKeyListener.setStartOffset(inputStartOffset);
         outputTextArea.addKeyListener(sequentialKeyListener);
         synchronized(sequentialKeyListener) {
@@ -224,5 +218,10 @@ public class UIWindow extends JFrame {
     public void showHelloMessage() {
         disableField();
         gameFieldTextArea.setText(fieldHandler);
+    }
+
+    public void debugFocus() {
+        Logger.getLogger().tag("FOCUS DEBUG").logInfo("Output text area: " + outputTextArea.toString());
+        Logger.getLogger().tag("FOCUS DEBUG").logInfo(getFocusOwner().toString());
     }
 }
