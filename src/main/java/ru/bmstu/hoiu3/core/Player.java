@@ -47,6 +47,7 @@ public class Player { // TODO add player id parsing
                 Logger.getLogger().tag("JSON").logWeak("Parsing Army " + o.toString());
                 JSONObject armyJSON = (JSONObject) o;
                 Hero hero = new Hero(new Army(armyJSON));
+                hero.setPlayer(Game.player);
 //                Army army = new Army(armyJSON);
                 heroes.add(hero);
                 Game.gameObjects.add(hero);
@@ -83,6 +84,10 @@ public class Player { // TODO add player id parsing
 
     public Castle getCastle() {
         return castle;
+    }
+
+    public void removeHero(Hero hero) {
+        heroes.remove(hero);
     }
 
     public int getCursorX() {

@@ -7,11 +7,12 @@ import org.json.JSONArray;
 import ru.bmstu.hoiu3.core.Unit;
 import space.crtech.utils.Logger;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Army extends GameObject {
     ArrayList<Unit> units = new ArrayList<>();
-    Hero hero;
+//    Hero hero;
     int id;
     int position;
 
@@ -74,9 +75,41 @@ public class Army extends GameObject {
         return cumulativeCount;
     }
 
+    public int getCount() {
+        return units.size();
+    }
+
+    public int getCumulativePower() {
+        int cumulativePower = 0;
+        for (Unit unit : units) {
+            cumulativePower += unit.getCumulativePower();
+        }
+        return cumulativePower;
+    }
+
+    public int getCumulativeHp() {
+        int cumulativeHp = 0;
+        for (Unit unit: units) {
+            cumulativeHp += unit.getCumulativeHp();
+        }
+        return cumulativeHp;
+    }
+
+    public void receiveDamage(int damage) {
+        ArrayList<Unit> deadUnits = new ArrayList<>();
+        for (Unit unit: units) {
+            damage = unit.receiveDamage(damage);
+            if (unit.getCumulativeHp() == 0) {
+                deadUnits.add(unit);
+            }
+        }
+        units.removeAll(deadUnits);
+
+    }
+
     @Override
     public String description() {
-        return "Army of " + this.units.size() + " units. Total: " + this.getCumulativeCount();
+        return "Army of " + this.units.size() + " units (" + this.getCumulativeCount() + " warriors)";
     }
 
 }
