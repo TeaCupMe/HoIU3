@@ -62,35 +62,35 @@ public class Game {
             }
         }
 
-        Thread drawFieldThread = new Thread(new Runnable() {
-            public void run() {
-                while (true) {
-                    ui.redrawField(gs.field);
-                    try {
-                        Thread.sleep(FIELD_REDRAW_TIMEOUT);
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
+        // Thread for periodic field redraw
+        Thread drawFieldThread = new Thread(() -> {
+            while (true) {
+                ui.redrawField(gs.field);
+                try {
+                    Thread.sleep(FIELD_REDRAW_TIMEOUT);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
                 }
             }
         });
 
-
+        // Show UIWindow
         window.setVisible(true);
-//        window.getOutputTextField().setFocusable(true);
-//        window.getOutputTextField().requestFocus();
-//        window.debugFocus();
 
+        // Get session name and player id
         collectInitialData();
-//        gameObjects.add(new GameObject(4, 4, GameObjectType.GAME_OBJECT_TYPE_CURSOR));
+
+        // Start drawing field
         drawFieldThread.start();
+
+        // Main game loop
         gameLoop();
 
 
     }
 
     static void gameLoop() {
-//        ui.println("\u001b[31;1;4mHello\u001b[0m");
+
         // Select action: select Hero, list Resources, end move
         try {
             while (true) {
@@ -120,9 +120,9 @@ public class Game {
                 });
 
                 // End move
-                actions.add(new UserAction("End move") {
+                actions.add(new UserAction("End turn") {
                     public void act() {
-                        endMoveAction();
+                        endTurnAction();
                     }
                 });
 
@@ -142,11 +142,13 @@ public class Game {
         }
     }
 
+    // Universal method to get action from user
     static void runActionSelector(ArrayList<UserAction> actions) {
         int selectedAction = ui.getActionSelectorInput(actions);
         actions.get(selectedAction).act();
     }
 
+    // Action to choose available hero and act on it
     static void chooseHeroAction() {
         Logger.getLogger().tag("HeroAction").logInfo("Prompting user to select hero");
         ui.println("Select hero:");
@@ -155,31 +157,32 @@ public class Game {
             int heroID = i;
             actions.add(new UserAction(player.getHero(heroID).description()) {
                 public void act() {
-                    actOnHero(player.getHero(heroID));
+                    actOnHeroAction(player.getHero(heroID));
                 }
             });
         }
         runActionSelector(actions);
     }
 
+    // Action to show cursor
     static void showCursorAction() {
-        Logger.getLogger().tag("ShowCursorAction").logInfo("Prompting user to select cursor");
+        Logger.getLogger().tag("ShowCursorAction").logInfo("Showing cursor");
 
         cursor = new Cursor(player.getCursorX(), player.getCursorY());
         gameObjects.add(cursor);
 
         ui.enableCursor(true);
-        ui.println("Cursor shown. Press Enter to view info about tile or Escape to exit");
+        ui.println("Cursor enabled. Press Enter to view info about tile or Escape to exit");
 
         ArrayList<KeyEvent> keyEvents = new ArrayList<>();
         AtomicInteger keyCode = new AtomicInteger(0);
         AtomicBoolean newInput = new AtomicBoolean(false);
+
         ui.startInteractiveInput(integer -> {
             keyCode.set(integer);
             newInput.set(true);
             return true;
         }, keyEvents);
-
 
         while (cursor.getCursorInput(keyCode, newInput, KeyEvent.VK_ESCAPE, KeyEvent.VK_ENTER)) {
             ui.println("Tile (%d; %d): %s".formatted(cursor.getX(), cursor.getY(), describeTileUnder(cursor)));
@@ -193,34 +196,40 @@ public class Game {
         ui.enableCursor(false);
     }
 
+    // Get string description of tile under GameObject
     static String describeTileUnder(GameObject occupant) {
         for (GameObject g : gameObjects) {
             if (g.intersects(occupant) && g.getClass()!=Cursor.class) {
                 return g.description();
             }
         }
-        return gs.field.fieldBuffer[occupant.getY()][occupant.getY()].description();
+        return gs.field.fieldBuffer[occupant.getY()][occupant.getX()].description();
     }
 
-    static void endMoveAction() { // TODO implement
-        Logger.getLogger().tag("EndMoveAction").logInfo("Ending move");
+    // Action to end turn and pass initiative to next player
+    static void endTurnAction() { // TODO implement
+        Logger.getLogger().tag("EndMoveAction").logInfo("Ending turn");
     }
 
+    // Action to end game, upload current session and exit application
     static void endGameAction() { // TODO implement
         Logger.getLogger().tag("EndGameAction").logInfo("Ending game");
         endGame();
     }
 
+    // Closing application
     static void endGame() {
         Logger.getLogger().tag("EndGame").logInfo("Ending game");
         System.exit(0);
     }
 
+    // Action to show available resources
     static void showResourcesAction() { // TODO implement
         Logger.getLogger().tag("ShowResourcesAction").logInfo("Showing resources");
     }
 
-    static void actOnHero(Hero hero) {
+    // Action to do something with a hero
+    static void actOnHeroAction(Hero hero) {
         Logger.getLogger().tag("actOnHero").logInfo("Acting on hero");
         ArrayList<UserAction> actions = new ArrayList<>();
         if (hero.intersects(player.getCastle())) {
@@ -229,11 +238,12 @@ public class Game {
         actions.add(new UserAction("Move") {
             @Override
             public void act() {
-                moveHero(hero);
+                moveHeroAction(hero);
             }
         });
 
         actions.add(new UserAction("Describe Army") {
+            // TODO maybe move to separate method to comply with general UserAction logic
             @Override
             public void act() {
                 ui.println("Hero army: " + hero.getArmy().description());
@@ -242,7 +252,8 @@ public class Game {
         runActionSelector(actions);
     }
 
-    static void moveHero(Hero hero) {
+    // Action to move Hero
+    static void moveHeroAction(Hero hero) {
         // Show cursor to let user select, where to move
         cursor = new Cursor(hero.getX(), hero.getY());
         gameObjects.add(cursor);
@@ -283,6 +294,7 @@ public class Game {
         ui.enableCursor(false);
     }
 
+    // Collect initial data from user
     static void collectInitialData() {
         Logger.getLogger().tag("Game").logInfo("Collecting initial data");
         Logger.getLogger().tag("GAME DEBUG").logWeak("Collecting session name");
@@ -310,7 +322,6 @@ public class Game {
 
 
         // Get player id from user
-
         do {
             String input = "";
             try {
@@ -337,27 +348,19 @@ public class Game {
 //
 //    }
 
+    // Utility method to set up useful properties of space.crtech.utils.Logger
     static void setupLogger() {
         Logger.getLogger().setLogLevel(3);
-//        Logger.getLogger().logStackTrace = false;
-        Logger.getLogger().enableTagLogging(false);
-//        Logger.getLogger().logLogType = true;
+        Logger.getLogger().enableStacktraceLogging(false);
         Logger.getLogger().enableLogTypeLogging(true);
-//        Logger.getLogger().logTag = true;
         Logger.getLogger().enableTagLogging(true);
-//        Logger.getLogger().allowSelectedTags = false;
         Logger.getLogger().enableTagsWhiteList(false);
-//        Logger.getLogger().dropSelectedTags = true;
         Logger.getLogger().enableTagsBlackList(true);
-//        Logger.getLogger().visibleTags.add("TestTag");
         Logger.getLogger().addTagToWhiteList("TestTag");
 
-
-
-//        Logger.getLogger().disabledTags.add("INPUT");
-//        Logger.getLogger().disabledTags.add("INPUT DEBUG");
-//        Logger.getLogger().disabledTags.add("OUTPUT DEBUG");
-//        Logger.getLogger().disabledTags.add("GAME DEBUG");
+        Logger.getLogger().addTagToBlackList("INTERACTIVE KEY LISTENER");
+        Logger.getLogger().addTagToBlackList("INPUT DEBUG");
+        Logger.getLogger().addTagToBlackList("OUTPUT DEBUG");
     }
 
 
