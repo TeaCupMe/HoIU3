@@ -32,7 +32,7 @@ jobs:
       env:
         GH_PAT: ${{ secrets.GH_PAT_PACKAGES_READONLY }}
       with:
-        servers: "[{ \"id\": \"github\", \"username\": \"TeaCupMe\", \"password\":\"${GH_PAT}\"}]"
+        servers: "[{ \"id\": \"github\", \"username\": \"TeaCupMe\", \"password\":\"${{env.GH_PAT}}\"}]"
         output_file: ./settings.xml
     - name: check settings.xml
       run: |
