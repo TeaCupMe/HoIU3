@@ -27,6 +27,12 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: maven
+    - name: maven-settings-xml-action
+      uses: whelk-io/maven-settings-xml-action@v22
+      env:
+        GH_PAT: ${{ secrets.GH_PAT_PACKAGES_READONLY }}
+      with:
+        servers: '[{ "id": "github", "username": "TeaCupMe", "password": $GH_PAT }]'
     - name: Build with Maven
       run: mvn -B package --file pom.xml
 
