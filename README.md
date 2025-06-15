@@ -1,3 +1,4 @@
+[![GitHub CI with Maven](https://github.com/TeaCupMe/HoIU3/actions/workflows/maven.yml/badge.svg)](https://github.com/TeaCupMe/HoIU3/actions/workflows/maven.yml)
 > [!CAUTION]
 > Игра, представленная в этом репозитории, всё ещё
 > находится в разработке. Подробнее ознакомится с
