@@ -69,10 +69,15 @@ public class Enemy extends GameObject {
                 .append(armyDescription())
                 .append("\n");
 
-        int heroPower = hero.getPower();
+        int heroPower = hero.getPower() * 2000;
         int myPower = army.getCumulativePower() * 0; // For debug purposes we set enemy power to 0
-        this.army.receiveDamage(heroPower);
-        hero.receiveDamage(myPower);
+
+        // repeat hitting each other until there is only one(or less) man standing
+        while (hero.isAlive() && army.getCumulativeCount()>0) {
+            this.army.receiveDamage(heroPower);
+            hero.receiveDamage(myPower);
+        }
+
         if (!hero.isAlive()) {
             interactionResult.append("Enemy killed hero ")
                     .append(hero.getName())
