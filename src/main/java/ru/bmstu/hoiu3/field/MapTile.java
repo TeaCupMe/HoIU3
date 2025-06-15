@@ -9,6 +9,12 @@ import java.util.Map;
 public class MapTile  {
 
     static final ArrayList<Integer> walkableTiles = new ArrayList<>(Arrays.asList(0, 8, 9));
+    static final Map<Integer, Integer> walkingPrice = Map.of(
+            0, 10,
+            8, 17,
+            9, 5
+    );
+
     Map<Integer, String> tileTypeToDescription = Map.of(
             0, "Empty land",
             1, "Obstruction type 1",
@@ -45,5 +51,12 @@ public class MapTile  {
 
     public boolean isWalkable() {
         return walkableTiles.contains(type);
+    }
+
+    public int getWalkingPrice() {
+        if (walkingPrice.containsKey(this.type)) {
+            return walkingPrice.get(this.type);
+        }
+        return Integer.MAX_VALUE;
     }
 }

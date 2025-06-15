@@ -3,7 +3,7 @@ package ru.bmstu.hoiu3.game_objects;
 public class GameObject {
     int x, y;
     GameObjectType type;
-    GameObject(int x, int y, GameObjectType type) {
+    public GameObject(int x, int y, GameObjectType type) {
         this.x = x;
         this.y = y;
         this.type = type;
