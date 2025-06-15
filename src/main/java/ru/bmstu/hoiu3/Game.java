@@ -4,6 +4,7 @@ import ru.bmstu.hoiu3.core.Player;
 import ru.bmstu.hoiu3.core.SessionData;
 import ru.bmstu.hoiu3.core.UserAction;
 import ru.bmstu.hoiu3.core.WebClient;
+import ru.bmstu.hoiu3.field.PathFinder;
 import ru.bmstu.hoiu3.game_objects.GameObject;
 import ru.bmstu.hoiu3.game_objects.Cursor;
 import ru.bmstu.hoiu3.game_objects.Hero;
@@ -278,12 +279,12 @@ public class Game {
         });
         cursorThread.start();
 
-//        PathFinder pathFinder = new PathFinder(gs.field, gameObjects);
+        PathFinder pathFinder = new PathFinder(gs.field, gameObjects);
 
         while (cursorThread.isAlive()) {
             if (cursor.hasMoved.get()) {
                 Logger.getLogger().tag("Hero Control DEBUG").logInfo("New Cursor position: " + cursor.getX() + ", " + cursor.getY());
-//                pathFinder.drawPath(hero, cursor);
+                pathFinder.drawPath(hero, cursor);
                 cursor.hasMoved.set(false);
             }
         }
