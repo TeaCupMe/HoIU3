@@ -70,14 +70,15 @@ public class Enemy extends GameObject {
                 .append("\n");
 
         int heroPower = hero.getPower();
-        int myPower = army.getCumulativePower() * 0;
+        int myPower = army.getCumulativePower() * 0; // For debug purposes we set enemy power to 0
         this.army.receiveDamage(heroPower);
         hero.receiveDamage(myPower);
         if (!hero.isAlive()) {
             interactionResult.append("Enemy killed hero ")
                     .append(hero.getName())
                     .append("!");
-        } else {
+        }
+        if (army.getCumulativeCount() == 0) {
             interactionResult.append("Hero ")
                     .append(hero.getName())
                     .append(" killed enemy!");
