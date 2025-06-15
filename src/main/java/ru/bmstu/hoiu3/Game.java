@@ -29,7 +29,7 @@ public class Game {
     public static Player player;
 //    static
     static final String url = "http://hoiu3.crtech.space";
-    static UI ui; // General ui handler
+    public static UI ui; // General ui handler
     static UIWindow window;
     static WebClient cl;
     public static SessionData gs;
@@ -139,6 +139,7 @@ public class Game {
             }
         } catch (Exception e) {
             Logger.getLogger().tag("Game Loop").logError(e.getMessage());
+            e.printStackTrace();
         }
     }
 
@@ -151,6 +152,11 @@ public class Game {
     // Action to choose available hero and act on it
     static void chooseHeroAction() {
         Logger.getLogger().tag("HeroAction").logInfo("Prompting user to select hero");
+        if (player.getHeroesCount() < 1) {
+            ui.println("You have no heroes! Can't select hero.");
+            return;
+        }
+
         ui.println("Select hero:");
         ArrayList<UserAction> actions = new ArrayList<>();
         for (int i = 0; i < player.getHeroesCount(); i++) {
@@ -246,21 +252,17 @@ public class Game {
             // TODO maybe move to separate method to comply with general UserAction logic
             @Override
             public void act() {
-                ui.println("Hero army: " + hero.getArmy().description());
+                ui.println("Hero army: " + hero.armyDescription());
             }
         });
         runActionSelector(actions);
     }
 
     // Action to move Hero
-    static void moveHeroAction(Hero hero) {
-        // Show cursor to let user select, where to move
-        cursor = new Cursor(hero.getX(), hero.getY());
-        gameObjects.add(cursor);
-
-        ui.enableCursor(true);
 
 
+
+    static void moveHero(Hero hero) {
         ArrayList<KeyEvent> keyEvents = new ArrayList<>();
         AtomicInteger keyCode = new AtomicInteger(0);
         AtomicBoolean newInput = new AtomicBoolean(false);
@@ -271,27 +273,33 @@ public class Game {
             return true;
         }, keyEvents);
 
-        AtomicBoolean cursorInputResult = new AtomicBoolean(false);
+        while (!(keyCode.get() == KeyEvent.VK_ESCAPE) && hero.isAlive()) {
+            if (newInput.get()) {
+                newInput.set(false);
 
-        Thread cursorThread = new Thread(() -> {
-            cursorInputResult.set(cursor.getCursorInput(keyCode, newInput, KeyEvent.VK_ESCAPE, KeyEvent.VK_ENTER));
-        });
-        cursorThread.start();
-
-//        PathFinder pathFinder = new PathFinder(gs.field, gameObjects);
-
-        while (cursorThread.isAlive()) {
-            if (cursor.hasMoved.get()) {
-                Logger.getLogger().tag("Hero Control DEBUG").logInfo("New Cursor position: " + cursor.getX() + ", " + cursor.getY());
-//                pathFinder.drawPath(hero, cursor);
-                cursor.hasMoved.set(false);
+                // TODO maybe just throw HeroMoveError?
+                String moveResult = hero.moveByKey(keyCode.get());
+                if (moveResult != null) {
+                    ui.println(moveResult);
+                    if (hero.checkInteracted()){
+                        ui.println("Press ENTER to continue");
+                        while (keyCode.get() != KeyEvent.VK_ENTER);
+                    }
+                }
+//                Logger.getLogger().tag("Hero movement").logInfo("Pressed " + keyCode.get());
             }
         }
 
+        if (!hero.isAlive()) {
+            ui.println("Hero died!");
+            gameObjects.remove(hero);
+            player.removeHero(hero);
+        }
+
         ui.endInteractiveInput();
-        gameObjects.remove(cursor);
-        cursor = null;
-        ui.enableCursor(false);
+//        gameObjects.remove(cursor);
+//        cursor = null;
+//        ui.enableCursor(false);
     }
 
     // Collect initial data from user

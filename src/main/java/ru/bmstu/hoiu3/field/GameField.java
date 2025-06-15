@@ -44,4 +44,16 @@ public class GameField {
     public void printField() {
         System.out.printf("width: %d, height: %d, field: %s", this.width, this.height, this.field);
     }
+
+    public boolean isWalkable(int x, int y) {
+        return isValidPosition(x, y) && fieldBuffer[y][x].isWalkable();
+    }
+
+    public int getWalkingPrice(int x, int y) {
+        return fieldBuffer[y][x].getWalkingPrice();
+    }
+
+    public MapTile getTile(int x, int y) {
+        return fieldBuffer[y][x];
+    }
 }

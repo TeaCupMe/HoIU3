@@ -2,6 +2,7 @@ package ru.bmstu.hoiu3.game_objects;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import ru.bmstu.hoiu3.Game;
 import ru.bmstu.hoiu3.core.Unit;
 import space.crtech.utils.Logger;
 
@@ -10,7 +11,8 @@ import java.util.ArrayList;
 public class Enemy extends GameObject {
     int position;
     int number;
-    ArrayList<Unit> units;
+//    ArrayList<Unit> units;
+    Army army;
 
     public Enemy (JSONObject jsonObject) {
         try {
@@ -36,12 +38,17 @@ public class Enemy extends GameObject {
             Logger.getLogger().tag("JSON").logWeak(unitsJSON.length() + " units in JSON");
             Logger.getLogger().tag("JSON").logWeak("Enemy units: " + unitsJSON.toString());
 
-            this.units = new ArrayList<>(unitsJSON.length());
+//            this.units = new ArrayList<>(unitsJSON.length());
+            ArrayList<Unit> units = new ArrayList<>(unitsJSON.length());
             for (Object o : unitsJSON) {
                 JSONObject unitJSON = (JSONObject) o;
-                this.units.add(new Unit(unitJSON));
+//                this.units.add(new Unit(unitJSON));
+                units.add(new Unit(unitJSON));
             }
-            Logger.getLogger().tag("JSON").logWeak("Enemy parsed with " + this.units.size() + " units");
+            // TODO Get rid of ArrayList<Unit> and use Army instead
+            this.army = new Army(units);
+
+            Logger.getLogger().tag("JSON").logWeak("Enemy parsed with " + army.description());
 
         } catch (Exception e) {
             Logger.getLogger().tag("JSON").logError("Unable to construct Enemy from JSON");
@@ -50,11 +57,46 @@ public class Enemy extends GameObject {
     }
 
     @Override
-    public String description() {
-        int totalNumber = 0;
-        for (Unit u : units) {
-            totalNumber += u.getNumber();
+    public String interact(Hero hero) {
+        StringBuilder interactionResult = new StringBuilder();
+        interactionResult.append("Fight!\n")
+                .append("\tHero ")
+                .append(hero.getName())
+                .append(" with \n\t\t")
+                .append(hero.armyDescription())
+                .append("\nis fighting \n")
+                .append("\tEnemy with\n\t\t")
+                .append(armyDescription())
+                .append("\n");
+
+        int heroPower = hero.getPower();
+        int myPower = army.getCumulativePower() * 0; // For debug purposes we set enemy power to 0
+        this.army.receiveDamage(heroPower);
+        hero.receiveDamage(myPower);
+        if (!hero.isAlive()) {
+            interactionResult.append("Enemy killed hero ")
+                    .append(hero.getName())
+                    .append("!");
         }
-        return "Enemy with " + this.units.size() + " units. Total: " + totalNumber;
+        if (army.getCumulativeCount() == 0) {
+            interactionResult.append("Hero ")
+                    .append(hero.getName())
+                    .append(" killed enemy!");
+            Game.gameObjects.remove(this);
+        }
+        return interactionResult.toString();
+    }
+
+    @Override
+    public String description() {
+//        int totalNumber = army.getCount();
+//        for (Unit u : units) {
+//            totalNumber += u.getNumber();
+//        }
+        return "Enemy with " + army.description();
+    }
+
+    public String armyDescription() {
+        return army.description() + ", power: " + army.getCumulativePower();
     }
 }

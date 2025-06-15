@@ -36,4 +36,23 @@ public class Unit {
     public int getNumber() {
         return number;
     }
+
+    public int getCumulativePower() {
+        return damage*number;
+    }
+
+    public int getCumulativeHp() {
+        return hp*number;
+    }
+
+    public int receiveDamage(int damage) {
+        int killed = 0;
+//        if (getCumulativeHp() <= damage) {
+//            killed = number;
+//        } else {
+            killed = Math.min((int) Math.ceil(((double) damage)/hp), number);
+//        }
+        number-=killed;
+        return damage - (killed * hp);
+    }
 }
