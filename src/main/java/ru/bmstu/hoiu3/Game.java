@@ -262,7 +262,7 @@ public class Game {
 
 
 
-    static void moveHero(Hero hero) {
+    static void moveHeroAction(Hero hero) {
         ArrayList<KeyEvent> keyEvents = new ArrayList<>();
         AtomicInteger keyCode = new AtomicInteger(0);
         AtomicBoolean newInput = new AtomicBoolean(false);
