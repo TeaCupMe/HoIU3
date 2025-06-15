@@ -179,7 +179,7 @@ public class UIWindow extends JFrame {
 //        removeKeyListener(interactiveKeyListener);
     }
     public void endInteractiveInput() {
-        removeKeyListener(interactiveKeyListener);
+        outputTextArea.removeKeyListener(interactiveKeyListener);
     }
 
 
