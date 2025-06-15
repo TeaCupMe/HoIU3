@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>ru.bmstu</groupId>
+    <artifactId>hoiu3</artifactId>
+    <version>1.0</version>
+
+    <dependencies>
+<!--        <dependency>-->
+<!--            <groupId>net.pwall.json</groupId>-->
+<!--            <artifactId>json-simple</artifactId>-->
+<!--            <version>1.9</version>-->
+<!--        </dependency>-->
+
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20240303</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>20.1.0</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>space.crtech.utils</groupId>
+            <artifactId>formatter</artifactId>
+            <version>[LATEST]</version>
+        </dependency>
+        <dependency>
+            <groupId>space.crtech.utils</groupId>
+            <artifactId>logger</artifactId>
+            <version>[LATEST]</version>
+        </dependency>
+    </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>15</source>
+                    <target>15</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
