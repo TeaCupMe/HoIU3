@@ -231,6 +231,7 @@ public class Game {
 
     // Action to show available resources
     static void showResourcesAction() { // TODO implement
+        ui.println("You have " + player.getMoney() + " money");
         Logger.getLogger().tag("ShowResourcesAction").logInfo("Showing resources");
     }
 

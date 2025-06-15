@@ -19,6 +19,8 @@ public class Player { // TODO add player id parsing
     Castle castle;
     int id;
 
+    int money = 1000;
+
     int cursorX, cursorY;
 
     Player(JSONObject jsonObject) {
@@ -47,7 +49,7 @@ public class Player { // TODO add player id parsing
                 Logger.getLogger().tag("JSON").logWeak("Parsing Army " + o.toString());
                 JSONObject armyJSON = (JSONObject) o;
                 Hero hero = new Hero(new Army(armyJSON));
-                hero.setPlayer(Game.player);
+                hero.setPlayer(this);
 //                Army army = new Army(armyJSON);
                 heroes.add(hero);
                 Game.gameObjects.add(hero);
@@ -95,5 +97,22 @@ public class Player { // TODO add player id parsing
     }
     public int getCursorY() {
         return cursorY;
+    }
+
+
+    public int getMoney() {
+        return money;
+    }
+
+    public void addMoney(int salary) {
+        money += salary;
+    }
+
+    public boolean decreaseMoney(int tax) {
+        if (tax <= money) {
+            money -= tax;
+            return true;
+        }
+        return false;
     }
 }
