@@ -282,8 +282,9 @@ public class Game {
                 if (moveResult != null) {
                     ui.println(moveResult);
                     if (hero.checkInteracted()){
-                        ui.println("Press ENTER to continue");
+                        ui.printTemporaryLine("Press ENTER to continue");
                         while (keyCode.get() != KeyEvent.VK_ENTER);
+                        ui.eraseTemporaryLine();
                     }
                 }
 //                Logger.getLogger().tag("Hero movement").logInfo("Pressed " + keyCode.get());

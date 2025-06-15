@@ -200,6 +200,14 @@ public class UI {
         return true;
     }
 
+    public void printTemporaryLine(String line) {
+        window.printTemporaryLine(line);
+    }
+
+    public void eraseTemporaryLine() {
+        window.eraseTemporaryLine();
+    }
+
     public void enableCursor(boolean enable) {
         cursorEnabled = enable;
     }

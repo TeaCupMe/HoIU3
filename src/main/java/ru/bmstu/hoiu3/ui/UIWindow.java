@@ -235,6 +235,16 @@ public class UIWindow extends JFrame {
         gameFieldTextArea.setText(fieldHandler);
     }
 
+    public void printTemporaryLine(String line) {
+        int caretPosition = outputTextArea.getCaretPosition();
+        outputTextArea.append(line);
+        outputTextArea.setCaretPosition(caretPosition);
+    }
+
+    public void eraseTemporaryLine() {
+        outputTextArea.replaceRange("", outputTextArea.getCaretPosition(), outputTextArea.getText().length());
+    }
+
     public void debugFocus() {
         Logger.getLogger().tag("FOCUS DEBUG").logInfo("Output text area: " + outputTextArea.toString());
         Logger.getLogger().tag("FOCUS DEBUG").logInfo(getFocusOwner().toString());
