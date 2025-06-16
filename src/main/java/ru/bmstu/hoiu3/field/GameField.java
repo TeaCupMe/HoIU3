@@ -56,4 +56,8 @@ public class GameField {
     public MapTile getTile(int x, int y) {
         return fieldBuffer[y][x];
     }
+
+    public JSONObject toJSON() {
+
+    }
 }
