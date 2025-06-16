@@ -1,7 +1,9 @@
 [![Java CI with Maven](https://github.com/TeaCupMe/HoIU3/actions/workflows/maven.yml/badge.svg)](https://github.com/TeaCupMe/HoIU3/actions/workflows/maven.yml)
+
 [`mainMaven`](https://github.com/TeaCupMe/HoIU3)
 
 ![Java CI with Maven for feature/api-v2](https://github.com/TeaCupMe/HoIU3/actions/workflows/maven.yml/badge.svg?branch=feature%2Fapi-v2)
+
 [`feature/api-v2`](https://github.com/TeaCupMe/HoIU3/tree/feature/api-v2)
 
 > [!CAUTION]
