@@ -61,4 +61,8 @@ public class GameField {
     public void updateTileType(int x, int y, int newType) {
         fieldBuffer[y][x] = new MapTile(newType);
     }
+
+    public JSONObject toJSON() {
+
+    }
 }
