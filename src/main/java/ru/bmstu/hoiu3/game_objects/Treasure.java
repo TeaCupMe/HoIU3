@@ -1,6 +1,7 @@
 package ru.bmstu.hoiu3.game_objects;
 
 import org.json.JSONObject;
+import ru.bmstu.hoiu3.Game;
 import space.crtech.utils.Logger;
 
 public class Treasure extends GameObject {
@@ -65,5 +66,19 @@ public class Treasure extends GameObject {
     @Override
     public String description() {
         return "Treasure";
+    }
+
+    @Override
+    // TODO uses gameObjects from Game class, rewrite
+    public String interact(Hero hero) {
+        StringBuilder interactionResult = new StringBuilder();
+        hero.player.addMoney(this.treasureValue);
+        interactionResult.append("Your hero found a treasure! Value: ")
+                .append(this.treasureValue)
+                .append("\n").append("Now you have ")
+                .append(hero.player.getMoney())
+                .append(" money.\n");
+        Game.gameObjects.remove(this);
+        return interactionResult.toString();
     }
 }
