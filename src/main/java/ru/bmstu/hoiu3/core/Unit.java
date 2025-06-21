@@ -55,4 +55,15 @@ public class Unit {
         number-=killed;
         return damage - (killed * hp);
     }
+
+    public JSONObject toJSON() {
+        JSONObject jo = new JSONObject();
+
+        jo.put("name", name);
+        jo.put("damage", damage);
+        jo.put("hp", hp);
+        jo.put("number", number);
+
+        return jo;
+    }
 }

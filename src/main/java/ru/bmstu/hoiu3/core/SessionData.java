@@ -23,7 +23,7 @@ public class SessionData {
     int gameState;
     int day;
 
-    SessionData(JSONObject jsonObject) {
+    public SessionData(JSONObject jsonObject) {
         try {
             // plain fields in first layer of JSON
             Logger.getLogger().tag("JSON").logInfo("Parsing session metadata");
@@ -79,26 +79,7 @@ public class SessionData {
         }
     }
 
-    public JSONObject readField(String key) {
-        return new JSONObject((JSONObject) jsonData.get(key));
-    }
-    public JSONObject getField(String key) {
-        return (JSONObject) jsonData.get(key);
-    }
-    public void setField(String key, Object value) {
 
-    }
-
-    public static boolean setFieldOnJSON(JSONObject jsonObject, String key, Object value) {
-        try {
-            jsonObject.put(key, value);
-            Logger.getLogger().tag("JSON").logWeak("SessionData: setFieldOnJSON: " + jsonObject.get(key));
-            return true;
-        } catch (Exception e) {
-            Logger.getLogger().tag("JSON").logError("Failed to set field " + key + ": " + e.getMessage());
-            return false;
-        }
-    }
 
     public Player getPlayerById(int id) {
         for (Player player : players) {
@@ -134,5 +115,52 @@ public class SessionData {
 
     public int getTotalPlayers() {
         return totalPlayers;
+    }
+
+    public JSONObject toJSON() {
+        JSONObject jo = new JSONObject();
+
+        // Serialize plain fields
+        jo.put("totalPlayers", this.totalPlayers);
+        jo.put("currentPlayer", this.currentPlayer);
+        jo.put("field", this.field.toJSON());
+        jo.put("gameState", this.gameState);
+        jo.put("day", this.day);
+
+        // Serialize players
+        JSONArray playersJSON = new JSONArray();
+        for (Player player: players) {
+            playersJSON.put(player.toJSON());
+        }
+        jo.put("players", playersJSON);
+
+        // Serialize enemies
+        JSONArray enemiesJSON = new JSONArray();
+        for (Enemy enemy: enemies) {
+            if (Game.gameObjects.contains(enemy)) {
+                enemiesJSON.put(enemy.toJSON());
+            }
+        }
+        jo.put("enemies", enemiesJSON);
+
+        // Serialize treasures
+        JSONArray treasuresJSON = new JSONArray();
+        for (Treasure treasure: treasures) {
+            if (Game.gameObjects.contains(treasure)) {
+                treasuresJSON.put(treasure.toJSON());
+            }
+        }
+        jo.put("treasures", treasuresJSON);
+
+
+        return jo;
+    }
+
+    public static int getCurrentPlayer(JSONObject jsonObject) {
+        return Integer.parseInt(jsonObject.get("currentPlayer").toString());
+    }
+
+    public void passTurn() {
+        currentPlayer = (currentPlayer+1)%(totalPlayers);
     }
 }

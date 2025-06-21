@@ -4,6 +4,7 @@ package ru.bmstu.hoiu3.game_objects;
 //import org.json.simple.JSONObject;
 import org.json.JSONObject;
 import org.json.JSONArray;
+import ru.bmstu.hoiu3.Game;
 import ru.bmstu.hoiu3.core.Unit;
 import space.crtech.utils.Logger;
 
@@ -105,6 +106,21 @@ public class Army extends GameObject {
         }
         units.removeAll(deadUnits);
 
+    }
+
+    public JSONObject toJSON() {
+        JSONObject jo = new JSONObject();
+
+        jo.put("id", id);
+        // TODO get rid of magic numbers
+        jo.put("position", 40 * y + x);
+
+        JSONArray unitsJSON = new JSONArray();
+        for (Unit unit: units) {
+            unitsJSON.put(unit.toJSON());
+        }
+        jo.put("army", unitsJSON);
+        return jo;
     }
 
     @Override

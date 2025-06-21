@@ -30,11 +30,11 @@ public class Player { // TODO add player id parsing
 
             id = Integer.parseInt(jsonObject.get("id").toString());
 
-            JSONArray armiesJSON =  (JSONArray)  jsonObject.get("armies");
+            JSONArray heroesJSON =  (JSONArray)  jsonObject.get("armies"); // TODO rename to heroes
             JSONObject castleJSON = (JSONObject) jsonObject.get("castle");
 
 
-            if (armiesJSON == null) {
+            if (heroesJSON == null) {
                 Logger.getLogger().tag("JSON").logError("Armies JSON is null");
                 throw new RuntimeException("armies JSON array is null");
             }
@@ -43,12 +43,12 @@ public class Player { // TODO add player id parsing
                 throw new RuntimeException("castle JSON array is null");
             }
 
-            heroes = new ArrayList<>(armiesJSON.length());
+            heroes = new ArrayList<>(heroesJSON.length());
 
-            for (Object o : armiesJSON) {
+            for (Object o : heroesJSON) {
                 Logger.getLogger().tag("JSON").logWeak("Parsing Army " + o.toString());
-                JSONObject armyJSON = (JSONObject) o;
-                Hero hero = new Hero(new Army(armyJSON));
+                JSONObject heroJSON = (JSONObject) o;
+                Hero hero = new Hero(heroJSON);
                 hero.setPlayer(this);
 //                Army army = new Army(armyJSON);
                 heroes.add(hero);
@@ -65,6 +65,22 @@ public class Player { // TODO add player id parsing
             Logger.getLogger().tag("JSON").logError("Unable to construct Player from JSON");
             throw e;
         }
+    }
+
+    public JSONObject toJSON() {
+        JSONObject jo = new JSONObject();
+        jo.put("id", id);
+
+        JSONArray armiesJSON = new JSONArray();
+        for (Hero hero: heroes) {
+            armiesJSON.put(hero.toJSON());
+        }
+
+        jo.put("armies", armiesJSON);
+
+        jo.put("castle", castle.toJSON());
+
+        return jo;
     }
 
     boolean canMove() {

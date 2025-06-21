@@ -11,10 +11,10 @@ import java.util.ArrayList;
 public class Enemy extends GameObject {
     int position;
     int number;
-//    ArrayList<Unit> units;
+    //    ArrayList<Unit> units;
     Army army;
 
-    public Enemy (JSONObject jsonObject) {
+    public Enemy(JSONObject jsonObject) {
         try {
             Logger.getLogger().tag("JSON").logWeak("Parsing Enemy " + jsonObject.toString());
 
@@ -25,13 +25,13 @@ public class Enemy extends GameObject {
                 Logger.getLogger().tag("JSON").logError("Enemy position is less than 0");
                 throw new RuntimeException("Enemy position is less than 0");
             }
-            if (this.position >= 40*20) {
+            if (this.position >= 40 * 20) {
                 Logger.getLogger().tag("JSON").logError("Enemy position is too large");
                 throw new RuntimeException("Enemy position is too large");
             }
 
-            this.x = this.position%40;
-            this.y = this.position/40;
+            this.x = this.position % 40;
+            this.y = this.position / 40;
             this.type = GameObjectType.GAME_OBJECT_TYPE_ENEMY;
 
             JSONArray unitsJSON = (JSONArray) jsonObject.get("units");
@@ -73,7 +73,7 @@ public class Enemy extends GameObject {
         int myPower = army.getCumulativePower() * 0; // For debug purposes we set enemy power to 0
 
         // repeat hitting each other until there is only one(or less) man standing
-        while (hero.isAlive() && army.getCumulativeCount()>0) {
+        while (hero.isAlive() && army.getCumulativeCount() > 0) {
             this.army.receiveDamage(heroPower);
             hero.receiveDamage(myPower);
         }
@@ -108,4 +108,20 @@ public class Enemy extends GameObject {
     public String armyDescription() {
         return army.description() + ", power: " + army.getCumulativePower();
     }
+
+    public JSONObject toJSON() {
+    JSONObject jo = new JSONObject();
+
+    jo.put("position", y * 40 + x);
+    jo.put("number", army.getCumulativeCount());
+
+    JSONArray unitsJSON = new JSONArray();
+    for (Unit unit: army.units) {
+        unitsJSON.put(unit.toJSON());
+    }
+
+    jo.put("units", unitsJSON);
+    return jo;
+}
+
 }

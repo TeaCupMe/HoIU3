@@ -28,7 +28,7 @@ public class Game {
     public static int playerID = -1;
     public static Player player;
 //    static
-    static final String url = "http://hoiu3.crtech.space";
+    static final String url = "https://hoiu3u.crtech.space";
     public static UI ui; // General ui handler
     static UIWindow window;
     static WebClient cl;
@@ -220,11 +220,30 @@ public class Game {
     // Action to end turn and pass initiative to next player
     static void endTurnAction() { // TODO implement
         Logger.getLogger().tag("EndMoveAction").logInfo("Ending turn");
+        gs.passTurn();
+        cl.uploadSession(gs.toJSON());
+        waitForMyTurn();
+        gs = new SessionData(cl.fetchSession());
+        ui.println("Now its your turn!");
+
+    }
+
+    static void waitForMyTurn() {
+        ui.println("Waiting for other player...");
+        do  {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                Logger.getLogger().tag("Turn change").logError("Weird interrupt happened, just for you to know");
+                throw new RuntimeException(e);
+            }
+        } while ((!cl.checkIfMyMove(playerID)));
     }
 
     // Action to end game, upload current session and exit application
     static void endGameAction() { // TODO implement
         Logger.getLogger().tag("EndGameAction").logInfo("Ending game");
+        cl.uploadSession(gs.toJSON());
         endGame();
     }
 
@@ -330,7 +349,8 @@ public class Game {
 
         // Fetch game session
         Logger.getLogger().tag("Game").logInfo("Fetching game session");
-        gs = cl.fetchGameState();
+//        gs = cl.fetchGameState();
+        gs = new SessionData(cl.fetchSession());
         Logger.getLogger().tag("Game").logSuccess("Loaded game session: " + gs.toDataString());
         ui.println("Loaded game session: " + gs.toDataString());
         ui.redrawFieldSlow(gs.field, 200);
@@ -348,9 +368,12 @@ public class Game {
             }
 
         } while (!((playerID < gs.getTotalPlayers()) && (playerID >= 0)) && ui.println("Incorrect player id! Try again?"));
+
         Logger.getLogger().tag("Game").logSuccess("Got player id: " + playerID);
         ui.println("Your player id: " + playerID);
+        waitForMyTurn();
 
+        gs = new SessionData(cl.fetchSession());
         // Assign selected player to player
         player = gs.getPlayerById(playerID);
         if (player == null) {
