@@ -26,25 +26,30 @@ public class WebClient {
         this.url = url;
     }
 
-    public boolean checkIfMyMove() {
+    public boolean checkIfMyMove(int myId) {
+        Logger.getLogger().tag("WebClient").logInfo("Fetching game state from " + url + sessionID);
         HttpRequest req = HttpRequest.newBuilder()
                 .uri(URI.create(url + "/api/v1/session/" + sessionID))
                 .GET()
                 .build();
-        HttpResponse<?> res;
+        HttpResponse<?> res = null;
         try {
             res = client.send(req, HttpResponse.BodyHandlers.ofString());
-            System.out.println(res.body());
-            return true;
+//            Logger.getLogger().logInfo(res.body().toString());
+            try {
+                Logger.getLogger().logInfo(res.body().toString());
+                return myId == SessionData.getCurrentPlayer(new JSONObject(res.body().toString()));
+            } catch (JSONException e) {
+                Logger.getLogger().tag("Web Client").logError("Unable to parse json");
+                throw new RuntimeException(e);
+            }
+
         } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
-            return false;
+            Logger.getLogger().tag("WebClient").logError("Could not get response: " + e.toString());
+            throw new RuntimeException(e);
         }
     }
 
-    public void uploadGameState() {
-
-    }
 
     public void uploadString(String str) {
         HttpRequest request = HttpRequest.newBuilder()

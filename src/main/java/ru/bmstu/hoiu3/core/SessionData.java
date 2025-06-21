@@ -23,7 +23,7 @@ public class SessionData {
     int gameState;
     int day;
 
-    SessionData(JSONObject jsonObject) {
+    public SessionData(JSONObject jsonObject) {
         try {
             // plain fields in first layer of JSON
             Logger.getLogger().tag("JSON").logInfo("Parsing session metadata");
@@ -154,5 +154,13 @@ public class SessionData {
 
 
         return jo;
+    }
+
+    public static int getCurrentPlayer(JSONObject jsonObject) {
+        return Integer.parseInt(jsonObject.get("currentPlayer").toString());
+    }
+
+    public void passTurn() {
+        currentPlayer = (currentPlayer+1)%(totalPlayers);
     }
 }

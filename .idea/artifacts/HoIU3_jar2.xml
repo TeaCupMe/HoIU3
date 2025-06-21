@@ -1,0 +1,16 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="HoIU3:jar2">
+    <output-path>$PROJECT_DIR$/out/artifacts/HoIU3_jar2</output-path>
+    <root id="archive" name="HoIU3.jar">
+      <element id="module-output" name="HoIU3" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jetbrains/annotations/20.1.0/annotations-20.1.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/json/json/20240303/json-20240303.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/space/crtech/utils/logger/1.0/logger-1.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/space/crtech/utils/formatter/1.0/formatter-1.0.jar" path-in-jar="/" />
+      <element id="file-copy" path="$PROJECT_DIR$/resources/splash.gif" />
+      <element id="directory" name="resources">
+        <element id="dir-copy" path="$PROJECT_DIR$/src/main/resources" />
+      </element>
+    </root>
+  </artifact>
+</component>
