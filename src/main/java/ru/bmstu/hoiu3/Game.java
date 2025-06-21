@@ -32,7 +32,12 @@ public class Game {
     public static UI ui; // General ui handler
     static UIWindow window;
     static WebClient cl;
-    public static SessionData gs;
+
+    public static SessionData getGameSession() {
+        return gs;
+    }
+
+    private static SessionData gs;
     static Thread splashScreenThread;
     static Cursor cursor;
 
@@ -91,7 +96,7 @@ public class Game {
 
     static void gameLoop() {
 
-        // Select action: select Hero, list Resources, end move
+        // Select action: select Hero, list Resources, end move, etc.
         try {
             while (true) {
                 Logger.getLogger().tag("GameLoop").logInfo("Prompting user to select top-level action");

@@ -61,6 +61,8 @@ public class UIWindow extends JFrame {
         gameFieldTextArea = new JTextArea(19, 63);
         gameFieldTextArea.setBackground(Color.BLACK);
         gameFieldTextArea.setForeground(Color.decode("#39FF14"));
+//        gameFieldTextArea.setForeground(Color.red);
+
         gameFieldTextArea.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 18));
         gameFieldTextArea.setEditable(false);
 //        gameFieldTextArea.setBorder(BorderFactory.createLineBorder(Color.black, 10));
@@ -70,7 +72,9 @@ public class UIWindow extends JFrame {
         outputTextArea = new JTextArea(10, 63);
         outputTextArea.setBackground(Color.BLACK);
         outputTextArea.setForeground(Color.decode("#39FF14"));
-//        outputTextArea.append("Test text\n");
+//        outputTextArea.setForeground(Color.red);
+
+        //        outputTextArea.append("Test text\n");
         outputTextArea.setFont(new Font(Font.MONOSPACED, Font.BOLD, 14));
         outputTextArea.setEditable(false);
 

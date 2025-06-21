@@ -81,11 +81,11 @@ public class Hero extends GameObject {
         } else {
             return null;
         }
-        if (!Game.gs.field.isWalkable(newX, newY)) {
-            return "Can't walk on " + Game.gs.field.getTile(newX, newY).description();
+        if (!Game.getGameSession().field.isWalkable(newX, newY)) {
+            return "Can't walk on " + Game.getGameSession().field.getTile(newX, newY).description();
         }
         GameObject occupant = GameObject.getByCoordinates(Game.gameObjects, newX, newY);
-        int walkingPrice = Game.gs.field.getWalkingPrice(x, y);
+        int walkingPrice = Game.getGameSession().field.getWalkingPrice(x, y);
         if (stamina < walkingPrice) return "Can't move, not enough stamina";
         stamina -= walkingPrice;
 
@@ -102,7 +102,7 @@ public class Hero extends GameObject {
         this.y = newY;
         if (isAlive()){
             interactionResult.append("Now on ")
-                    .append(Game.gs.field.getTile(newX, newY).description())
+                    .append(Game.getGameSession().field.getTile(newX, newY).description())
                     .append(". Stamina remaining: ")
                     .append(stamina);
         }

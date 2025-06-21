@@ -78,8 +78,8 @@ public class Cursor extends GameObject {
     }
 
     private boolean canMoveTo(int x, int y) {
-        int fieldWidth = Game.gs.field.getWidth();
-        int fieldHeight = Game.gs.field.getHeight();
+        int fieldWidth = Game.getGameSession().field.getWidth();
+        int fieldHeight = Game.getGameSession().field.getHeight();
         return x >= 0 && x < fieldWidth && y >= 0 && y < fieldHeight;
     }
 
