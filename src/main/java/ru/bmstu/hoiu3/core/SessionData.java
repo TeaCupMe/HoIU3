@@ -25,6 +25,7 @@ public class SessionData {
 
     public SessionData(JSONObject jsonObject) {
         try {
+
             // plain fields in first layer of JSON
             Logger.getLogger().tag("JSON").logInfo("Parsing session metadata");
             this.totalPlayers = Integer.parseInt(jsonObject.get("totalPlayers").toString());
@@ -33,6 +34,8 @@ public class SessionData {
             this.gameState = Integer.parseInt(jsonObject.get("gameState").toString());
             this.day = Integer.parseInt(jsonObject.get("day").toString());
             Logger.getLogger().tag("JSON").logSuccess("Session metadata parsed");
+
+            Game.gameObjects = new ArrayList<>();
 
             // Parse players data
             Logger.getLogger().tag("JSON").logInfo("Parsing players");
@@ -44,6 +47,8 @@ public class SessionData {
                 players.add(new Player((JSONObject) playersJSON.get(i)));
             }
             Logger.getLogger().tag("JSON").logSuccess(this.totalPlayers + " players added");
+
+
 
             // Parse enemies data
             Logger.getLogger().tag("JSON").logInfo("Parsing enemies");
