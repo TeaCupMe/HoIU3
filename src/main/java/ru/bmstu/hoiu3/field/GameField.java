@@ -63,6 +63,19 @@ public class GameField {
     }
 
     public JSONObject toJSON() {
+        JSONObject jo = new JSONObject();
 
+        jo.put("height", height);
+        jo.put("width", width);
+
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int row = 0; row < this.height; row++){
+            for (int col = 0; col < this.width; col++){
+                stringBuilder.append(fieldBuffer[row][col].type);
+            }
+        }
+
+        jo.put("data", stringBuilder.toString());
+        return jo;
     }
 }

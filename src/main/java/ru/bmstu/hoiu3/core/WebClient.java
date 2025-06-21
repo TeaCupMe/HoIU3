@@ -28,7 +28,7 @@ public class WebClient {
 
     public boolean checkIfMyMove() {
         HttpRequest req = HttpRequest.newBuilder()
-                .uri(URI.create(url + "?id=%s".formatted(sessionID)))
+                .uri(URI.create(url + "/api/v1/session/" + sessionID))
                 .GET()
                 .build();
         HttpResponse<?> res;
@@ -48,7 +48,7 @@ public class WebClient {
 
     public void uploadString(String str) {
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(url + sessionID))
+                .uri(URI.create(url + "/api/v1/session/" + sessionID))
                 .headers("Content-Type", "application/json")
                 .POST(HttpRequest.BodyPublishers.ofString(str))
                 .build();
@@ -65,7 +65,7 @@ public class WebClient {
     public SessionData fetchGameState() {
         Logger.getLogger().tag("WebClient").logInfo("Fetching game state from " + url + sessionID);
         HttpRequest req = HttpRequest.newBuilder()
-                .uri(URI.create(url + sessionID))
+                .uri(URI.create(url + "/api/v1/session/" + sessionID))
                 .GET()
                 .build();
         HttpResponse<?> res = null;
@@ -87,9 +87,9 @@ public class WebClient {
     }
 
     public static boolean verifySession(String url, String sessionID) {
-        Logger.getLogger().tag("WebClient").logInfo("Verifying session " + url + "?id=%s".formatted(sessionID));
+        Logger.getLogger().tag("WebClient").logInfo("Verifying session " + url + "/api/v1/session/" + sessionID);
         HttpRequest req = HttpRequest.newBuilder()
-                .uri(URI.create(url + sessionID))
+                .uri(URI.create(url + "/api/v1/session/" + sessionID))
                 .GET()
                 .build();
         HttpResponse<?> res;
@@ -110,7 +110,7 @@ public class WebClient {
     public JSONObject fetchSession() {
         Logger.getLogger().tag("WebClient").logInfo("Fetching game state from " + url + sessionID);
         HttpRequest req = HttpRequest.newBuilder()
-                .uri(URI.create(url + sessionID))
+                .uri(URI.create(url + "/api/v1/session/" + sessionID))
                 .GET()
                 .build();
         HttpResponse<?> res = null;
@@ -131,7 +131,7 @@ public class WebClient {
 
     public void uploadSession(JSONObject jsonObject) {
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(url + sessionID))
+                .uri(URI.create(url + "/api/v1/session/" + sessionID))
                 .headers("Content-Type", "application/json")
                 .POST(HttpRequest.BodyPublishers.ofString(jsonObject.toString(4)))
                 .build();

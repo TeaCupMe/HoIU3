@@ -81,4 +81,14 @@ public class Treasure extends GameObject {
         Game.gameObjects.remove(this);
         return interactionResult.toString();
     }
+
+    public JSONObject toJSON() {
+        JSONObject jo = new JSONObject();
+
+        // TODO get rid of magic numbers
+        jo.put("position", y * 40 + x);
+        jo.put("type", treasureType);
+
+        return jo;
+    }
 }

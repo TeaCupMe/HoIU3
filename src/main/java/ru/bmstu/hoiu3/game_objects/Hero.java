@@ -1,5 +1,6 @@
 package ru.bmstu.hoiu3.game_objects;
 
+import org.json.JSONObject;
 import ru.bmstu.hoiu3.Game;
 import ru.bmstu.hoiu3.core.Player;
 import space.crtech.utils.Logger;
@@ -9,6 +10,7 @@ import java.awt.event.KeyEvent;
 public class Hero extends GameObject {
     private String name;
     private int stamina;
+    private int id;
     Army army;
     Player player;
     private boolean interacted;
@@ -29,11 +31,21 @@ public class Hero extends GameObject {
         this.stamina = 0;
     }
 
-    public Hero(Army army) {
+    public Hero(Army army, int id) {
         super(army.x, army.y, GameObjectType.GAME_OBJECT_TYPE_HERO);
         this.name = "Hero";
         this.stamina = 100;
         this.army = army;
+        this.id = id;
+    }
+
+    public Hero(JSONObject jsonObject) {
+        this.id = Integer.parseInt(jsonObject.get("id").toString());
+        this.stamina = 100;
+        this.army = new Army(jsonObject); // TODO fix parsing self
+        this.x = army.x;
+        this.y = army.y;
+        this.type = GameObjectType.GAME_OBJECT_TYPE_HERO;
     }
 
     public void setPlayer(Player player) {
@@ -100,6 +112,8 @@ public class Hero extends GameObject {
 //        if (!isAlive()) return false;
         this.x = newX;
         this.y = newY;
+        army.x = x;
+        army.y = y; // TODO some shit, rewrite
         if (isAlive()){
             interactionResult.append("Now on ")
                     .append(Game.getGameSession().field.getTile(newX, newY).description())
@@ -120,5 +134,13 @@ public class Hero extends GameObject {
     public void receiveDamage(int damage) {
         Logger.getLogger().tag("Hero").logInfo("Receiving " + damage + " points of damage");
         this.army.receiveDamage(damage);
+    }
+
+    public JSONObject toJSON() {
+//        JSONObject jo = new JSONObject();
+//        jo.put("army", army.toJSON());
+//        jo.put("id", id);
+//        jo.put("position", x + y * 40); // TODO get rid of magic numbers
+        return army.toJSON();
     }
 }

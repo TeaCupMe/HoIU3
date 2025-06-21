@@ -28,7 +28,7 @@ public class Game {
     public static int playerID = -1;
     public static Player player;
 //    static
-    static final String url = "http://hoiu3.crtech.space";
+    static final String url = "https://hoiu3u.crtech.space";
     public static UI ui; // General ui handler
     static UIWindow window;
     static WebClient cl;
@@ -219,6 +219,7 @@ public class Game {
 
     // Action to end turn and pass initiative to next player
     static void endTurnAction() { // TODO implement
+        cl.uploadSession(gs.toJSON());
         Logger.getLogger().tag("EndMoveAction").logInfo("Ending turn");
     }
 
