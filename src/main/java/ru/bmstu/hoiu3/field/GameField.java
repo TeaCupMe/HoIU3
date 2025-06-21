@@ -56,4 +56,9 @@ public class GameField {
     public MapTile getTile(int x, int y) {
         return fieldBuffer[y][x];
     }
+
+    // TODO uses magic number as tile type
+    public void updateTileType(int x, int y, int newType) {
+        fieldBuffer[y][x] = new MapTile(newType);
+    }
 }

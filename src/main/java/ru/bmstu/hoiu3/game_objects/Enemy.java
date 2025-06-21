@@ -89,6 +89,10 @@ public class Enemy extends GameObject {
                     .append(" killed enemy!");
             Game.gameObjects.remove(this);
         }
+
+        // TODO uses magic number as tile type
+        Game.getGameSession().field.updateTileType(this.x, this.y, 8);
+
         return interactionResult.toString();
     }
 
