@@ -37,7 +37,7 @@ public class UIWindow extends JFrame {
     public UIWindow() {
 
         // General window setup
-        BufferedImage myAppImage = loadIcon("./resources/PonyKnightV2.jpg");
+        BufferedImage myAppImage = loadIcon("PonyKnightV2.jpg");
         if(myAppImage != null)
         {
             Logger.getLogger().logSuccess("Icon loaded");
@@ -67,6 +67,7 @@ public class UIWindow extends JFrame {
         gameFieldTextArea.setEditable(false);
 //        gameFieldTextArea.setBorder(BorderFactory.createLineBorder(Color.black, 10));
 //        gameFieldTextArea.insert(fieldHandler, 0);
+        gameFieldTextArea.getCaret().setVisible(false);
 
         // Output display area
         outputTextArea = new JTextArea(10, 63);
@@ -76,7 +77,9 @@ public class UIWindow extends JFrame {
 
         //        outputTextArea.append("Test text\n");
         outputTextArea.setFont(new Font(Font.MONOSPACED, Font.BOLD, 14));
+        outputTextArea.setBorder(BorderFactory.createEmptyBorder());
         outputTextArea.setEditable(false);
+        outputTextArea.getCaret().setVisible(false);
 
 
         // Init listeners
@@ -89,7 +92,7 @@ public class UIWindow extends JFrame {
         jp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
         jp.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 //        jp.setViewportBorder(BorderFactory.createLineBorder(Color.black));
-        jp.setBorder(BorderFactory.createLineBorder(Color.BLACK, 10));
+        jp.setBorder(BorderFactory.createEmptyBorder());
         // Add all components
 
         add(jp, BorderLayout.PAGE_END);

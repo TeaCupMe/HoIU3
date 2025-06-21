@@ -224,6 +224,7 @@ public class Game {
         cl.uploadSession(gs.toJSON());
         waitForMyTurn();
         gs = new SessionData(cl.fetchSession());
+        player = gs.getPlayerById(playerID);
         ui.println("Now its your turn!");
 
     }
